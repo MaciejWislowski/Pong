@@ -25,20 +25,20 @@ let aiY = 200;
 const lineWidth = 6;
 const lineHeight = 16;
 
-let ballSpeedX = -2;
-let ballSpeedY = -2;
+let ballSpeedX = -4;
+let ballSpeedY = -4;
 
 topCanvas = canvas.offsetTop;
 console.log(topCanvas);
 
 // Functions
 function player() {
-    ctx.fillStyle = "lightgreen";
+    ctx.fillStyle = "grey";
     ctx.fillRect(playerX, playerY, paddleWidth, paddleHeight); 
 }
 
 function ai() { 
-    ctx.fillStyle = "yellow";
+    ctx.fillStyle = "darkgrey";
     ctx.fillRect(aiX, aiY, paddleWidth, paddleHeight); 
 }
 
@@ -51,21 +51,64 @@ function ball() {
 
     if (ballY <= 0 || ballY >=ch-ballSize) {
         ballSpeedY = -ballSpeedY;
+    }
+    if (ballX <= 0) {
+        window.location.reload();
+    }
+    if (ballX >=cw-ballSize) {
+        window.location.reload();
+    }
+
+    if ((ballX <= playerX + paddleWidth) && (ballX > playerX + paddleWidth-15)  && (ballY + ballSize> playerY) && (ballY< playerY + paddleHeight)) {
+        ballX += 5;
+        ballSpeedX = -ballSpeedX;
+        ballSpeedY = ballSpeedY;
         speedUp();
     }
-    if (ballX <= 0 || ballX>= cw-ballSize) {
+    if (((ballX < playerX + paddleWidth) && (ballX+ballSize > playerX)) && (ballY + ballSize >= playerY) && (ballY + ballSize <= playerY+9) ) {
+        ballX += 5;
+        ballY -= 5;
+    ballSpeedX = -ballSpeedX;
+    ballSpeedY = -ballSpeedY;
+    speedUp();
+    }
+    if (((ballX < playerX + paddleWidth) && (ballX+ballSize > playerX)) && (ballY <= playerY + paddleHeight) && (ballY > playerY + paddleHeight-9) ) {
+        ballX += 5;
+        ballY += 5;
         ballSpeedX = -ballSpeedX;
+        ballSpeedY = -ballSpeedY;
+    speedUp();
+    }
+    if ((ballX + ballSize >= aiX) && (ballX + ballSize < aiX+10) && (ballY + ballSize >= aiY) && (ballY <= aiY + paddleHeight)) {
+        ballX -= 5;
+        ballSpeedX = -ballSpeedX;
+        ballSpeedY = ballSpeedY;
         speedUp();
+    }
+    if ((ballX + ballSize > aiX ) && (ballX + ballSize < aiX + paddleWidth) && (ballY + ballSize >= aiY) && (ballY + ballSize <= aiY+9) ) {
+        ballX -= 5;
+        ballY -= 5;
+        ballSpeedX = -ballSpeedX;
+        ballSpeedY = -ballSpeedY;
+    speedUp();
+    }
+    if ((ballX + ballSize > aiX ) && (ballX + ballSize < aiX + paddleWidth)&& (ballY <= aiY + paddleHeight) && (ballY > aiY + paddleHeight-9) ) {
+        ballX -= 5;
+        ballY += 5;
+        ballSpeedX = -ballSpeedX;
+        ballSpeedY = -ballSpeedY;
+        speedUp();  
     }
 }
 
+
 function table() {
     // board
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "darkred";
     ctx.fillRect(0, 0, cw, ch);
     // middle line
     for (let linePosition = 20; linePosition < ch; linePosition += 30) {
-        ctx.fillStyle = "gray";
+        ctx.fillStyle = "black";
         ctx.fillRect(cw/2 - lineWidth/2, linePosition - lineHeight/2, lineWidth, lineHeight);
     }
 }
@@ -95,6 +138,31 @@ function playerPosition(e) {
 }
 
 function aiPosition () {
+    var middlePaddle = aiY + paddleHeight/2;
+    var middleBall = ballY + ballSize/2;
+
+    if(ballX > cw/2) {
+        if (middlePaddle - middleBall > 200) {
+            aiY -= 15; 
+        }
+        else if (middlePaddle - middleBall > 50) {
+            aiY -= 5;
+        }
+        else if (middlePaddle - middleBall < -200) {
+            aiY += 15;
+        }
+        else if (middlePaddle - middleBall < -50) {
+            aiY += 5;
+        }
+    }
+    else if (ballX <= cw/2 && ballX > 2*playerX) {
+        if (middlePaddle-middleBall > 100) {
+            aiY -= 2;
+        }
+        else if (middlePaddle - middleBall < - 100) {
+            aiY += 2;
+        }
+    }
 
 }
 
@@ -116,6 +184,6 @@ function speedUp() {
 
 //Event listener
 canvas.addEventListener("mousemove", playerPosition);
-setInterval(game, 1000/60);
+setInterval(game, 15);
 
 
