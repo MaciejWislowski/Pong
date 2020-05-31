@@ -12,3 +12,83 @@ canvas {
     border: 5px solid black;
     cursor: none;
 }
+
+.grid-container {
+    display: grid;
+    grid-template-rows: auto auto; 
+
+    row-gap: 5px;
+}
+
+.scoreboard {
+    display: grid;
+    grid-template-areas:    
+    'title title title set spt sps score scpt scps'
+    'title title title set sat sas score scat scas';
+    row-gap: 5px;
+    column-gap: 5px;
+    border: 5px solid black;
+    background-color: darkred;
+    width: 1000px;
+    height: 100 px;
+}
+
+.sc {
+    text-align: center;
+    font-size: 200%;
+}
+
+.sc1 {
+    grid-area: title;
+}
+.sc2 {
+    grid-area: title;
+}
+.sc3 {
+    grid-area: title;
+}
+.sc4 {
+    grid-area: set;
+}
+.sc5 {
+    grid-area: spt;
+}
+.sc6{
+    grid-area: sps;
+}
+.sc7 {
+    grid-area: score;
+}
+.sc8 {
+    grid-area: scpt;
+}
+.sc9 {
+    grid-area: scps;
+}
+.sc10 {
+    grid-area: title;
+}
+.sc11 {
+    grid-area: title;
+}
+.sc12 {
+    grid-area: title;
+}
+.sc13 {
+    grid-area: set;
+}
+.sc14 {
+    grid-area: sat;
+}
+.sc15 {
+    grid-area: sas;
+}
+.sc16 {
+    grid-area: score;
+}
+.sc17 {
+    grid-area: scat;
+}
+.sc18 {
+    grid-area: scas;
+}
