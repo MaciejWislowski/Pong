@@ -94,7 +94,7 @@ function aiPosition () {
             aiY += ballSpeedMax+playerScore/11*(playerSet+1)-aiScore/11;
         }
         else if (middlePaddle - middleBall < -50) {
-            aiY += ballSpeedMax/3+playerScore/11*(playerSet+1)-aiScore/11dada;
+            aiY += ballSpeedMax/3+playerScore/11*(playerSet+1)-aiScore/11;
         }
     }
 
