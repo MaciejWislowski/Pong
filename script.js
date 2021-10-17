@@ -6,9 +6,9 @@ let docHigh = document.body.clientHeight;
 let arrowU = document.getElementById('arrowUp');
 let arrowD = document.getElementById('arrowDown');
 
-if(document.body.clientWidth/document.body.clientHeight > 2.2) {
+if(document.body.clientWidth/document.body.clientHeight > 2.1) {
     canvas.height = docHigh* 0.95;
-    canvas.width = canvas.height * 2;
+    canvas.width = canvas.height * 1.8;
 } else {
     canvas.width = docWidth * 0.8;
     canvas.height = canvas.width * 0.5;
@@ -298,7 +298,7 @@ function game () {
     aiPosition();
     collistions();
     set();
-    if(document.body.clientWidth/document.body.clientHeight > 2.2) {
+    if(document.body.clientWidth/document.body.clientHeight > 2.1) {
         arrowU.addEventListener("mousedown", moveUp);
         arrowD.addEventListener("mousedown", moveDown);
     }
@@ -328,7 +328,7 @@ function refresh() {
 function wideScreenSupport() {
     let con = document.getElementById('control');
  
-    if(document.body.clientWidth/document.body.clientHeight > 2.2) {
+    if(document.body.clientWidth/document.body.clientHeight > 2.1) {
         let mainContainer = document.getElementById('main-container');
 
         mainContainer.classList.toggle('grid-container');
