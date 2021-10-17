@@ -3,6 +3,8 @@ const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let docWidth = document.body.clientWidth;
 let docHigh = document.body.clientHeight;
+let arrowU = document.getElementById('arrowUp');
+let arrowD = document.getElementById('arrowDown');
 
 if(document.body.clientWidth/document.body.clientHeight > 2.2) {
     canvas.height = docHigh* 0.95;
@@ -12,18 +14,7 @@ if(document.body.clientWidth/document.body.clientHeight > 2.2) {
     canvas.height = canvas.width * 0.5;
 }
 
-function wideScreenSupport() {
-    if(document.body.clientWidth/document.body.clientHeight > 2.2) {
-        let mainContainer = document.getElementById('main-container');
-
-        mainContainer.classList.toggle('grid-container');
-        mainContainer.classList.toggle('grid-container-alternative');
-    }
-}
-
-
-
-
+const velocityY = 20;
 
 const cw = canvas.width;
 const ch = canvas.height;
@@ -202,10 +193,33 @@ function overpower1() {
     }
 }
 
+function moveUp() {
+    playerY = playerY - velocityY;
+    if (playerY >= ch - paddleHeight) {
+        playerY = ch - paddleHeight;
+    }
+
+    if (playerY <= 0) {
+        playerY = 0;
+    }
+}
+
+function moveDown() {
+    playerY = playerY + velocityY;
+    if (playerY >= ch - paddleHeight) {
+        playerY = ch - paddleHeight;
+    }
+
+    if (playerY <= 0) {
+        playerY = 0;
+    }
+}
+
 // Players paddle position on Y Axis
 function playerPosition(e) {
     // console.log("Pozycja myszy to: " (e.clientY- topCanvas));
     playerY = e.clientY - topCanvas - paddleHeight/2;
+ 
 
     if (playerY >= ch - paddleHeight) {
         playerY = ch - paddleHeight;
@@ -284,6 +298,10 @@ function game () {
     aiPosition();
     collistions();
     set();
+    if(document.body.clientWidth/document.body.clientHeight > 2.2) {
+        arrowU.addEventListener("mousedown", moveUp);
+        arrowD.addEventListener("mousedown", moveDown);
+    }
 }
 
 function startGame() {
@@ -307,10 +325,23 @@ function refresh() {
     location.reload();
 }
 
+function wideScreenSupport() {
+    let con = document.getElementById('control');
+ 
+    if(document.body.clientWidth/document.body.clientHeight > 2.2) {
+        let mainContainer = document.getElementById('main-container');
+
+        mainContainer.classList.toggle('grid-container');
+        mainContainer.classList.toggle('grid-container-alternative');
+        con.classList.toggle('none');
+    }
+}
+
 //Execution and Event listeners
 wideScreenSupport();
 table();
 phonePositionCheck()
+
 
 refreshButton.addEventListener("click", refresh);
 startButton.addEventListener("click", startGame);
