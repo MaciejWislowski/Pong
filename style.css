@@ -1,7 +1,4 @@
-@font-face {
-    font-family: pixelll;
-    src: url("fonts/PixelFJVerdana12pt.ttf");
-}
+
 body {
     margin: 0;
     padding: 0;
@@ -14,7 +11,7 @@ body {
 }
 
 canvas {
-    border: 5px solid black;
+    border: 0.4rem solid black;
     cursor: none;
 }
 
@@ -22,7 +19,7 @@ canvas {
     display: grid;
     grid-template-rows: auto auto; 
 
-    row-gap: 5px;
+    row-gap: 1rem;
 }
 
 .scoreboard {
@@ -30,12 +27,13 @@ canvas {
     grid-template-areas:    
     'title title title set spt sps score scpt scps'
     'title title title set sat sas score scat scas';
-    row-gap: 5px;
-    column-gap: 5px;
-    border: 5px solid black;
+    row-gap: 0.4rem;
+    column-gap: 0.4rem;
+    border: 0.4rem solid black;
     background-color: darkred;
-    width: 99.2%;
+
     height: 90%;
+
 }
 
 .sc {
@@ -43,8 +41,20 @@ canvas {
     vertical-align: middle;
     font-size: 200%;
     color: grey;
-    font-family: pixelll;
 }
+
+@media only screen and (max-width: 800px) {
+    .sc {
+      font-size: 80%;
+    }
+  }
+
+  @media only screen and (max-width: 300px) {
+    .sc {
+      font-size: 20%;
+    }
+  }
+
 
 .sc1 {
     grid-area: title;

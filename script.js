@@ -3,7 +3,11 @@ const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let docWidth = document.body.clientWidth;
 
-canvas.width = docWidth * 0.8;
+const scoreBoard = document.querySelector('scoreboard');
+
+
+
+canvas.width = docWidth * 0.7;
 canvas.height = canvas.width * 0.5;
 
 const cw = canvas.width;
@@ -122,16 +126,16 @@ function collistions() {
     if (ballX <= 0) {
         ballX = cw/2-ballSize/2;
         ballY = ch/2-ballSize/2;
-        ballSpeedX = 4;
-        ballSpeedY = 4;
+        ballSpeedX = 0.004 * cw;
+        ballSpeedY = 0.004 * cw;
         aiScore++;
         document.getElementById('0002').innerHTML = aiScore;
     }
     if (ballX >=cw-ballSize) {
         ballX = cw/2-ballSize/2;
         ballY = ch/2-ballSize/2;
-        ballSpeedX = -4;
-        ballSpeedY = -4;
+        ballSpeedX = -0.004 * cw;
+        ballSpeedY = -0.004 * cw;
         playerScore++;
         document.getElementById('0001').innerHTML = playerScore;
     }
@@ -200,16 +204,16 @@ function playerPosition(e) {
 // Ball speed change
 function speedUp() {
     if (ballSpeedX >0 && ballSpeedX < ballSpeedMax) {
-        ballSpeedX += 0.5;
+        ballSpeedX += 0.0005 *cw;
     }
     else if (ballSpeedX < 0 && ballSpeedX > -ballSpeedMax) {
-        ballSpeedX -= 0.5;
+        ballSpeedX -= 0.0005 *cw;
     }
     if (ballSpeedY >0 && ballSpeedY < ballSpeedMax) {
-        ballSpeedY += 0.1;
+        ballSpeedY += 0.0001 *cw;
     }
     else if (ballSpeedY < 0 && ballSpeedY > -ballSpeedMax) {
-        ballSpeedY -= 0.1;
+        ballSpeedY -= 0.0001 *cw;
     }  
 }
 
