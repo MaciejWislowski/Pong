@@ -204,13 +204,14 @@ canvas {
 /*#region Control */
 .arrow {
     align-items: center;
-    padding: 0.5rem;
+    padding: 0.1rem;
     justify-content: center;
     border: 0.4rem solid black;
-    background-color: darkred;
+    background-color: gray;
+    opacity: 40%;
 }
 .control-arrow {
-    font-size: 200%;
+    font-size: 100%;
 }
 
 #arrowUp {
