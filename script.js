@@ -1,32 +1,33 @@
 // Global variables
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
+let docWidth = document.body.clientWidth;
 
-canvas.width = 1000;
-canvas.height = 500;
+canvas.width = docWidth * 0.8;
+canvas.height = canvas.width * 0.5;
 
 const cw = canvas.width;
 const ch = canvas.height;
 
-const ballSize = 20;
+const ballSize = 0.02*cw;
 
 let ballX = cw/2-ballSize/2;
 let ballY = ch/2-ballSize/2;
 
-const paddleHeight = 100;
-const paddleWidth = 20;
+const paddleHeight = 0.1 * cw;
+const paddleWidth = 0.02 * cw;
 
-const playerX = 70;
-const aiX = 910;
+const playerX = 0.07 * cw;
+const aiX = 0.91 * cw;
 
-let playerY = 200;
-let aiY = 200;
+let playerY = 0.2 * cw;
+let aiY = 0.2 * cw;
 
-const lineWidth = 6;
-const lineHeight = 16;
+const lineWidth = 0.006 * cw;
+const lineHeight = 0.015 * cw;
 
-let ballSpeedX = -4;
-let ballSpeedY = -4;
+let ballSpeedX = -0.004 * cw;
+let ballSpeedY = -0.004 * cw;
 
 let playerScore = 0;
 let aiScore = 0;
@@ -34,7 +35,7 @@ let aiScore = 0;
 let playerSet = 0;
 let aiSet = 0;
 
-let ballSpeedMax = 15;
+let ballSpeedMax = 0.015 * cw;
 
 
 topCanvas = canvas.offsetTop;
@@ -68,7 +69,7 @@ function table() {
     ctx.fillStyle = "darkred";
     ctx.fillRect(0, 0, cw, ch);
     // middle line
-    for (let linePosition = 20; linePosition < ch; linePosition += 30) {
+    for (let linePosition = 0.02 * cw; linePosition < ch; linePosition += 0.03 * cw) {
         ctx.fillStyle = "black";
         ctx.fillRect(cw/2 - lineWidth/2, linePosition - lineHeight/2, lineWidth, lineHeight);
     }
@@ -84,26 +85,26 @@ function aiPosition () {
 
    // Ai paddle movement on ai part of board
     if(ballX > cw/2) {
-        if (middlePaddle - middleBall > 200) {
+        if (middlePaddle - middleBall > 0.2 * cw) {
             aiY -= ballSpeedMax+playerScore/11*(playerSet+1)-aiScore/11; 
         }
-        else if (middlePaddle - middleBall > 50) {
+        else if (middlePaddle - middleBall > 0.05 * cw) {
             aiY -= ballSpeedMax/3+playerScore/11*(playerSet+1)-aiScore/11;
         }
-        else if (middlePaddle - middleBall < -200) {
+        else if (middlePaddle - middleBall < -0.2 * cw) {
             aiY += ballSpeedMax+playerScore/11*(playerSet+1)-aiScore/11;
         }
-        else if (middlePaddle - middleBall < -50) {
+        else if (middlePaddle - middleBall < -0.05 * cw) {
             aiY += ballSpeedMax/3+playerScore/11*(playerSet+1)-aiScore/11;
         }
     }
 
     // AI movement on players part of board
     else if (ballX <= cw/2 && ballX > 2*playerX) {
-        if (middlePaddle-middleBall > 100) {
+        if (middlePaddle-middleBall > 0.1 * cw) {
             aiY -= ballSpeedMax/5;
         }
-        else if (middlePaddle - middleBall < - 100) {
+        else if (middlePaddle - middleBall < - 0.1 * cw) {
             aiY += ballSpeedMax/5;
         }
     }
@@ -234,9 +235,25 @@ function set() {
     }
     if (playerSet==3) {
         alert("Congratulations!!! You win!!!");
+        playerSet = 0;
+        aiSet = 0;
+        playerScore = 0;
+        aiScore = 0;
+        document.getElementById('0003').innerHTML = playerSet;
+        document.getElementById('0004').innerHTML = aiSet;
+        document.getElementById('0002').innerHTML = aiScore;
+        document.getElementById('0001').innerHTML = playerScore;
     }
     if (aiSet==3) {
         alert("You are a looser!!!");
+        playerSet = 0;
+        aiSet = 0;
+        playerScore = 0;
+        aiScore = 0;
+        document.getElementById('0003').innerHTML = playerSet;
+        document.getElementById('0004').innerHTML = aiSet;
+        document.getElementById('0002').innerHTML = aiScore;
+        document.getElementById('0001').innerHTML = playerScore;
     }
 }
 
