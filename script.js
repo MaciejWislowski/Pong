@@ -14,7 +14,10 @@ if(document.body.clientWidth/document.body.clientHeight > 2.1) {
     canvas.height = canvas.width * 0.5;
 }
 
-const velocityY = 20;
+/* ====== V connected with player speed ====== */
+var speed = 2;
+var velY = 0;
+var friction = 0.08;
 
 const cw = canvas.width;
 const ch = canvas.height;
@@ -193,8 +196,25 @@ function overpower1() {
     }
 }
 
-function moveUp() {
-    playerY = playerY - velocityY;
+function playerUpdate() {
+    arrowU.addEventListener("mousedown", () => {
+        if(velY > -speed) {
+            velY--;
+        }
+        velY *= friction;
+        playerY +=velY
+    })
+
+    arrowD.addEventListener("mousedown", () => {
+        if(velY < speed) {
+            velY++;
+        }
+        velY *= friction;
+        playerY +=velY
+    })
+
+
+
     if (playerY >= ch - paddleHeight) {
         playerY = ch - paddleHeight;
     }
@@ -204,31 +224,21 @@ function moveUp() {
     }
 }
 
-function moveDown() {
-    playerY = playerY + velocityY;
-    if (playerY >= ch - paddleHeight) {
-        playerY = ch - paddleHeight;
-    }
-
-    if (playerY <= 0) {
-        playerY = 0;
-    }
-}
 
 // Players paddle position on Y Axis
-function playerPosition(e) {
-    // console.log("Pozycja myszy to: " (e.clientY- topCanvas));
-    playerY = e.clientY - topCanvas - paddleHeight/2;
+// function playerPosition(e) {
+//     // console.log("Pozycja myszy to: " (e.clientY- topCanvas));
+//     playerY = e.clientY - topCanvas - paddleHeight/2;
  
 
-    if (playerY >= ch - paddleHeight) {
-        playerY = ch - paddleHeight;
-    }
+//     if (playerY >= ch - paddleHeight) {
+//         playerY = ch - paddleHeight;
+//     }
 
-    if (playerY <= 0) {
-        playerY = 0;
-    }
-}
+//     if (playerY <= 0) {
+//         playerY = 0;
+//     }
+// }
 
 // Ball speed change
 function speedUp() {
@@ -298,10 +308,7 @@ function game () {
     aiPosition();
     collistions();
     set();
-    if(document.body.clientWidth/document.body.clientHeight > 2.1) {
-        arrowU.addEventListener("mousedown", moveUp);
-        arrowD.addEventListener("mousedown", moveDown);
-    }
+    playerUpdate();
 }
 
 function startGame() {
@@ -310,7 +317,7 @@ function startGame() {
     if (!startGameMessage.classList.contains('none')){
         startGameMessage.classList.toggle('none');
     }
-    setInterval(game, 15);
+    setInterval(game, 100);
 }
 
 function phonePositionCheck() {
