@@ -2,13 +2,28 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let docWidth = document.body.clientWidth;
+let docHigh = document.body.clientHeight;
 
-const scoreBoard = document.querySelector('scoreboard');
+if(document.body.clientWidth/document.body.clientHeight > 2.2) {
+    canvas.height = docHigh* 0.95;
+    canvas.width = canvas.height * 2;
+} else {
+    canvas.width = docWidth * 0.8;
+    canvas.height = canvas.width * 0.5;
+}
+
+function wideScreenSupport() {
+    if(document.body.clientWidth/document.body.clientHeight > 2.2) {
+        let mainContainer = document.getElementById('main-container');
+
+        mainContainer.classList.toggle('grid-container');
+        mainContainer.classList.toggle('grid-container-alternative');
+    }
+}
 
 
 
-canvas.width = docWidth * 0.7;
-canvas.height = canvas.width * 0.5;
+
 
 const cw = canvas.width;
 const ch = canvas.height;
@@ -271,8 +286,35 @@ function game () {
     set();
 }
 
-//Event listener
+function startGame() {
+    const startGameMessage = document.getElementById("start__screen");
+
+    if (!startGameMessage.classList.contains('none')){
+        startGameMessage.classList.toggle('none');
+    }
+    setInterval(game, 15);
+}
+
+function phonePositionCheck() {
+    const orientationMessage = document.getElementById('orientation__change');
+
+    if(window.innerHeight > window.innerWidth) {
+        orientationMessage.classList.remove('none');
+    }
+}
+
+function refresh() {
+    location.reload();
+}
+
+//Execution and Event listeners
+wideScreenSupport();
+table();
+phonePositionCheck()
+
+refreshButton.addEventListener("click", refresh);
+startButton.addEventListener("click", startGame);
 canvas.addEventListener("mousemove", playerPosition);
-setInterval(game, 15);
+
 
 

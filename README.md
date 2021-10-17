@@ -23,3 +23,10 @@ Update 0.3
 - Add Score Board
 - Add counters and victory conditions
 - Improve AI
+
+
+------------------------------------------------------------------------------------------------
+
+Update 0.5
+
+- Add support for widescreen and mobile (but not full mobile control tho)

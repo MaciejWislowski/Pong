@@ -7,9 +7,9 @@
     <link rel="stylesheet" type="text/css" href="style.css"  />
 </head>
 <body>
-    <div class="grid-container">
+    <div class="grid-container" id="main-container">
         <div class="scoreboard grid-item">
-            <div class="sc sc1">Pong 0.3</div>
+            <div class="sc sc1">Pong 0.5</div>
             <div class="sc sc2"></div>
             <div class="sc sc3"></div>
             <div class="sc sc4">Set</div>
@@ -31,7 +31,21 @@
         </div>
         <div class="item2 grid-item"><canvas></canvas></div>
     </div>
+    <div class="messages">
+        <div class="start__screen message" id="start__screen">
+            <p class="message-txt">Welcome in Pong game!</p>
+            <div class="button" id="startButton">
+                <p>Start the game!</p>
+            </div>
+        </div>
 
+        <div class="orientation__change message none" id="orientation__change">
+            <p class="message-txt">Use landscape orientation please!</p>
+            <div class="button" id="refreshButton">
+                <p>Refresh!</p>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
