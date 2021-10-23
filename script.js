@@ -17,7 +17,7 @@ if(document.body.clientWidth/document.body.clientHeight > 2.1) {
 /* ====== V connected with player speed ====== */
 var speed = 2;
 var velY = 0;
-var friction = 1;
+var friction = 0.93;
 
 const cw = canvas.width;
 const ch = canvas.height;
@@ -276,33 +276,20 @@ function set() {
 
 function playeru() {
     if(document.body.clientWidth/document.body.clientHeight > 2.1) {
-        arrowU.addEventListener("mouseover", () => {
-            friction = 1.1;
+        arrowU.addEventListener("click", () => {
             if(velY > -speed) {
-                velY-=2;
+                velY-=10;
             }
-        })
-        arrowU.addEventListener("mouseout", () => {
-            friction = 0.85;
         })
     
-        arrowD.addEventListener("mousemove", () => {
-            friction = 1.1;
+        arrowD.addEventListener("click", () => {
             if(velY < speed) {
-                velY+=2;
+                velY+=10;
             }
         })
-        arrowD.addEventListener("mouseout", () => {
-            friction = 0.85;
-        })
 
-        if(velY > 6) {
-            velY= 6;
-        }else if(velY < -6) {
-            velY = -6;
-        } else {
+
             velY *= friction;
-        }
 
  
 
