@@ -374,7 +374,7 @@ if((navigator.userAgent.indexOf("Win") != -1)) {
     document.addEventListener("mousemove", playerPosition);
 }
 if((navigator.userAgent.indexOf("Android") != -1)) {
-    document.addEventListener("touchmove", playerPosition);
+    document.addEventListener("touchstart", playerPosition);
 }
 refreshButton.addEventListener("click", refresh);
 startButton.addEventListener("click", startGame);
