@@ -2,6 +2,14 @@
 My pong game
 ------------------------------------------------------------------------------------------------
 
+Update 0.52
+
+- Improved mobile version control;
+- Improved AI
+- Improved scoreboard for mobile and widescreens;
+
+------------------------------------------------------------------------------------------------
+
 Update 0.51
 
 - Improved mobile version control;

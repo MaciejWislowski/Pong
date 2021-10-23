@@ -68,7 +68,6 @@ canvas {
 
 .sc1 {
     grid-area: title;
-    vertical-align: middle;
 }
 .sc2 {
     grid-area: title;
@@ -76,21 +75,29 @@ canvas {
 .sc3 {
     grid-area: title;
 }
+.grid-container-alternative .scoreboard .sc4 {
+    grid-area: set;
+    border-top: 0.2rem dashed black;
+}
+
 .sc4 {
     grid-area: set;
 }
+
 .sc5 {
     grid-area: spt;
-    color: grey;
+    justify-self: left;
 }
 .sc6{
     grid-area: sps;
 }
-.sc7 {
+.grid-container-alternative .scoreboard .sc7 {
     grid-area: score;
+    border-top: 0.2rem dashed black;
 }
 .sc8 {
     grid-area: scpt;
+    justify-self: left;
 }
 .sc9 {
     grid-area: scps;
@@ -104,20 +111,25 @@ canvas {
 .sc12 {
     grid-area: title;
 }
-.sc13 {
+.grid-container-alternative .scoreboard .sc13 {
     grid-area: set;
+    border-top: 0.2rem dashed black;
 }
 .sc14 {
     grid-area: sat;
+    justify-self: left;
 }
 .sc15 {
     grid-area: sas;
 }
-.sc16 {
+.grid-container-alternative .scoreboard .sc16 {
     grid-area: score;
+    border-top: 0.2rem dashed black;
+
 }
 .sc17 {
     grid-area: scat;
+    justify-self: left;
 }
 .sc18 {
     grid-area: scas;
@@ -132,10 +144,10 @@ canvas {
 .message {
     position: absolute;
     display: grid;
-    left: 30%;
-    width: 40%;
-    top: 30%;
-    height: 40%;
+    left: 0%;
+    width: 100%;
+    top: 0%;
+    height: 100%;
     align-items: center;
     justify-content: center;
     border: 0.4rem solid black;
@@ -168,7 +180,7 @@ canvas {
 /*#region MediaQueries*/
 @media only screen and (max-width: 1300px) {
 
-    .message {
+    /* .message {
         left: 20%;
         width: 60%;
         top: 20%;
@@ -181,7 +193,7 @@ canvas {
 
     .message .button {
         font-size: 100%;
-    }
+    } */
 }
 
 @media only screen and (max-width: 800px) {
@@ -189,9 +201,9 @@ canvas {
         font-size: 80%;
     }
 
-    .message-txt {
+    /* .message-txt {
         font-size: 80%;
-    }
+    } */
 }
 
   @media only screen and (max-width: 300px) {
@@ -199,9 +211,9 @@ canvas {
       font-size: 20%;
     }
 
-    .message-txt {
+    /* .message-txt {
         font-size: 20%;
-    }
+    } */
 }
 
 /*#endregion MediaQueries*/

@@ -8,7 +8,7 @@ let arrowD = document.getElementById('arrowDown');
 
 if(document.body.clientWidth/document.body.clientHeight > 2.1) {
     canvas.height = docHigh* 0.95;
-    canvas.width = canvas.height * 1.8;
+    canvas.width = canvas.height * 1.7;
 } else {
     canvas.width = docWidth * 0.8;
     canvas.height = canvas.width * 0.5;
@@ -98,26 +98,26 @@ function aiPosition () {
 
    // Ai paddle movement on ai part of board
     if(ballX > cw/2) {
-        if (middlePaddle - middleBall > 0.2 * cw) {
-            aiY -= ballSpeedMax+playerScore/11*(playerSet+1)-aiScore/11; 
+        if (middlePaddle - middleBall > 0.2 * ch) {
+            aiY -= ballSpeedMax+playerScore/11*(playerSet+1); 
         }
-        else if (middlePaddle - middleBall > 0.05 * cw) {
-            aiY -= ballSpeedMax/3+playerScore/11*(playerSet+1)-aiScore/11;
+        else if (middlePaddle - middleBall > 0.05 * ch) {
+            aiY -= ballSpeedMax/3+playerScore/11*(playerSet+1);
         }
-        else if (middlePaddle - middleBall < -0.2 * cw) {
-            aiY += ballSpeedMax+playerScore/11*(playerSet+1)-aiScore/11;
+        else if (middlePaddle - middleBall < -0.2 * ch) {
+            aiY += ballSpeedMax+playerScore/11*(playerSet+1);
         }
-        else if (middlePaddle - middleBall < -0.05 * cw) {
-            aiY += ballSpeedMax/3+playerScore/11*(playerSet+1)-aiScore/11;
+        else if (middlePaddle - middleBall < -0.05 * ch) {
+            aiY += ballSpeedMax/3+playerScore/11*(playerSet+1);
         }
     }
 
     // AI movement on players part of board
     else if (ballX <= cw/2 && ballX > 2*playerX) {
-        if (middlePaddle-middleBall > 0.1 * cw) {
+        if (middlePaddle-middleBall > 0.1 * ch) {
             aiY -= ballSpeedMax/5;
         }
-        else if (middlePaddle - middleBall < - 0.1 * cw) {
+        else if (middlePaddle - middleBall < - 0.1 * ch) {
             aiY += ballSpeedMax/5;
         }
     }
@@ -189,15 +189,6 @@ function collistions() {
         speedUp();  
     }
 }
-
-function overpower1() {
-    if (playerScore>=9) {
-        overpower++;
-    }
-}
-
-
-
 
 //Players paddle position on Y Axis
 function playerPosition(e) {
@@ -274,8 +265,8 @@ function set() {
     }
 }
 
-function playeru() {
-    if(document.body.clientWidth/document.body.clientHeight > 2.1) {
+function playerUpdate() {
+    if((navigator.userAgent.indexOf("Android") == 1)) {
         arrowU.addEventListener("touchstart", () => {
             friction = 1.1;
             if(velY > -speed) {
@@ -304,8 +295,6 @@ function playeru() {
             velY *= friction;
         }
 
- 
-
         playerY +=velY;
     
         if (playerY >= ch - paddleHeight) {
@@ -316,7 +305,49 @@ function playeru() {
             playerY = 0;
         }
     }
+    
     else {
+        
+            arrowU.addEventListener("mouseover", () => {
+                friction = 1.1;
+                if(velY > -speed) {
+                    velY-=2;
+                }
+            })
+            arrowU.addEventListener("mouseout", () => {
+                friction = 0.85;
+            })
+        
+            arrowD.addEventListener("mouseover", () => {
+                friction = 1.1;
+                if(velY < speed) {
+                    velY+=2;
+                }
+            })
+            arrowD.addEventListener("mouseout", () => {
+                friction = 0.85;
+            })
+    
+            if(velY > 6) {
+                velY= 6;
+            }else if(velY < -6) {
+                velY = -6;
+            } else {
+                velY *= friction;
+            }
+    
+            playerY +=velY;
+        
+            if (playerY >= ch - paddleHeight) {
+                playerY = ch - paddleHeight;
+            }
+        
+            if (playerY <= 0) {
+                playerY = 0;
+            }
+        
+
+
         canvas.addEventListener("mousemove", playerPosition);
     }
 
@@ -324,7 +355,7 @@ function playeru() {
 }
 
 function game () {
-    // playerUpdate();
+    playerUpdate();
     table();
     ball();
     player();
@@ -332,7 +363,6 @@ function game () {
     aiPosition();
     collistions();
     set();
-    playeru();
 
 }
 
