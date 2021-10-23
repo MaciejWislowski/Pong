@@ -2,19 +2,15 @@
 My pong game
 ------------------------------------------------------------------------------------------------
 
-Update 0.1
+Update 0.51
 
-- Create a board 
-- Create a paddles
-- Create a ball
-- add collision detection with board borders
+- Improved mobile version control;
 
------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
 
-Update 0.2 
+Update 0.5
 
-- Add collision detection with paddles
-- Add AI
+- Add support for widescreen and mobile (but not full mobile control tho)
 
 ------------------------------------------------------------------------------------------------
 
@@ -24,9 +20,24 @@ Update 0.3
 - Add counters and victory conditions
 - Improve AI
 
+------------------------------------------------------------------------------------------------
+
+Update 0.2 
+
+- Add collision detection with paddles
+- Add AI
 
 ------------------------------------------------------------------------------------------------
 
-Update 0.5
+Update 0.1
 
-- Add support for widescreen and mobile (but not full mobile control tho)
+- Create a board 
+- Create a paddles
+- Create a ball
+- add collision detection with board borders
+
+
+
+
+
+
