@@ -8,7 +8,7 @@ let arrowD = document.getElementById('arrowDown');
 
 if(document.body.clientWidth/document.body.clientHeight > 2.1) {
     canvas.height = docHigh* 0.95;
-    canvas.width = canvas.height * 1.8;
+    canvas.width = canvas.height * 1.6;
 } else {
     canvas.width = docWidth * 0.8;
     canvas.height = canvas.width * 0.5;
