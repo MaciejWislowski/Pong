@@ -208,6 +208,20 @@ function playerPosition(e) {
     }
 }
 
+function playerPositionMobile(e) {
+    // console.log("Pozycja myszy to: " (e.clientY- topCanvas));
+    playerY = e.touches[0].clientY - topCanvas - paddleHeight/2;
+ 
+
+    if (playerY >= ch - paddleHeight) {
+        playerY = ch - paddleHeight;
+    }
+
+    if (playerY <= 0) {
+        playerY = 0;
+    }
+}
+
 // Ball speed change
 function speedUp() {
     if (ballSpeedX >0 && ballSpeedX < ballSpeedMax) {
@@ -374,7 +388,7 @@ if((navigator.userAgent.indexOf("Win") != -1)) {
     document.addEventListener("mousemove", playerPosition);
 }
 if((navigator.userAgent.indexOf("Android") != -1)) {
-    document.addEventListener("touchmove", playerPosition);
+    document.addEventListener("touchmove", playerPositionMobile);
 }
 refreshButton.addEventListener("click", refresh);
 startButton.addEventListener("click", startGame);
