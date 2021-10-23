@@ -9,6 +9,9 @@ let arrowD = document.getElementById('arrowDown');
 if(document.body.clientWidth/document.body.clientHeight > 2.1) {
     canvas.height = docHigh* 0.95;
     canvas.width = canvas.height * 1.6;
+    if((navigator.userAgent.indexOf("Win") != -1)) {
+        canvas.width = canvas.height * 2;
+    }
 } else {
     canvas.width = docWidth * 0.8;
     canvas.height = canvas.width * 0.5;
@@ -265,56 +268,56 @@ function set() {
     }
 }
 
-function playerUpdate() {
-    if((navigator.userAgent.indexOf("Android") != -1)) {
-        arrowU.addEventListener("touchstart", () => {
-            friction = 1.1;
-            if(velY > -speed) {
-                velY-=2;
-            }
-        })
-        arrowU.addEventListener("touchend", () => {
-            friction = 0.85;
-        })
+// function playerUpdate() {
+//     if((navigator.userAgent.indexOf("Android") != -1)) {
+//         arrowU.addEventListener("touchstart", () => {
+//             friction = 1.1;
+//             if(velY > -speed) {
+//                 velY-=2;
+//             }
+//         })
+//         arrowU.addEventListener("touchend", () => {
+//             friction = 0.85;
+//         })
     
-        arrowD.addEventListener("touchstart", () => {
-            friction = 1.1;
-            if(velY < speed) {
-                velY+=2;
-            }
-        })
-        arrowD.addEventListener("touchend", () => {
-            friction = 0.85;
-        })
+//         arrowD.addEventListener("touchstart", () => {
+//             friction = 1.1;
+//             if(velY < speed) {
+//                 velY+=2;
+//             }
+//         })
+//         arrowD.addEventListener("touchend", () => {
+//             friction = 0.85;
+//         })
 
-        if(velY > 6) {
-            velY= 6;
-        }else if(velY < -6) {
-            velY = -6;
-        } else {
-            velY *= friction;
-        }
+//         if(velY > 6) {
+//             velY= 6;
+//         }else if(velY < -6) {
+//             velY = -6;
+//         } else {
+//             velY *= friction;
+//         }
 
-        playerY +=velY;
+//         playerY +=velY;
     
-        if (playerY >= ch - paddleHeight) {
-            playerY = ch - paddleHeight;
-        }
+//         if (playerY >= ch - paddleHeight) {
+//             playerY = ch - paddleHeight;
+//         }
     
-        if (playerY <= 0) {
-            playerY = 0;
-        }
-    }
+//         if (playerY <= 0) {
+//             playerY = 0;
+//         }
+//     }
     
-    else {
-        canvas.addEventListener("mousemove", playerPosition);
-    }
+//     else {
+//         document.addEventListener("mousemove", playerPosition);
+//     }
 
 
-}
+// }
 
 function game () {
-    playerUpdate();
+    // playerUpdate();
     table();
     ball();
     player();
@@ -327,18 +330,23 @@ function game () {
 
 function startGame() {
     const startGameMessage = document.getElementById("start__screen");
+    const orientationMessage = document.getElementById('orientation__change');
 
     if (!startGameMessage.classList.contains('none')){
         startGameMessage.classList.toggle('none');
     }
-    setInterval(game, 15);
-}
-
-function phonePositionCheck() {
-    const orientationMessage = document.getElementById('orientation__change');
 
     if(window.innerHeight > window.innerWidth) {
         orientationMessage.classList.remove('none');
+    } else
+    setInterval(game, 15);
+}
+
+function phoneCheck() {
+    let con = document.getElementById('control');
+
+    if((navigator.userAgent.indexOf("Android") != -1)) {
+        con.classList.toggle('none');
     }
 }
 
@@ -347,23 +355,27 @@ function refresh() {
 }
 
 function wideScreenSupport() {
-    let con = document.getElementById('control');
  
     if(document.body.clientWidth/document.body.clientHeight > 2.1) {
         let mainContainer = document.getElementById('main-container');
 
         mainContainer.classList.toggle('grid-container');
         mainContainer.classList.toggle('grid-container-alternative');
-        con.classList.toggle('none');
+
     }
 }
 
 //Execution and Event listeners
 wideScreenSupport();
 table();
-phonePositionCheck()
+phoneCheck();
 
-
+if((navigator.userAgent.indexOf("Win") != -1)) {
+    document.addEventListener("mousemove", playerPosition);
+}
+if((navigator.userAgent.indexOf("Android") != -1)) {
+    document.addEventListener("touchmove", playerPosition);
+}
 refreshButton.addEventListener("click", refresh);
 startButton.addEventListener("click", startGame);
 
