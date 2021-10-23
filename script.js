@@ -17,7 +17,7 @@ if(document.body.clientWidth/document.body.clientHeight > 2.1) {
 /* ====== V connected with player speed ====== */
 var speed = 2;
 var velY = 0;
-var friction = 0.08;
+var friction = 1;
 
 const cw = canvas.width;
 const ch = canvas.height;
@@ -30,7 +30,7 @@ let ballY = ch/2-ballSize/2;
 const paddleHeight = 0.1 * cw;
 const paddleWidth = 0.02 * cw;
 
-const playerX = 0.07 * cw;
+let playerX = 0.07 * cw;
 const aiX = 0.91 * cw;
 
 let playerY = 0.2 * cw;
@@ -196,24 +196,14 @@ function overpower1() {
     }
 }
 
-function playerUpdate() {
-    arrowU.addEventListener("mousedown", () => {
-        if(velY > -speed) {
-            velY--;
-        }
-        velY *= friction;
-        playerY +=velY
-    })
-
-    arrowD.addEventListener("mousedown", () => {
-        if(velY < speed) {
-            velY++;
-        }
-        velY *= friction;
-        playerY +=velY
-    })
 
 
+
+//Players paddle position on Y Axis
+function playerPosition(e) {
+    // console.log("Pozycja myszy to: " (e.clientY- topCanvas));
+    playerY = e.clientY - topCanvas - paddleHeight/2;
+ 
 
     if (playerY >= ch - paddleHeight) {
         playerY = ch - paddleHeight;
@@ -223,22 +213,6 @@ function playerUpdate() {
         playerY = 0;
     }
 }
-
-
-// Players paddle position on Y Axis
-// function playerPosition(e) {
-//     // console.log("Pozycja myszy to: " (e.clientY- topCanvas));
-//     playerY = e.clientY - topCanvas - paddleHeight/2;
- 
-
-//     if (playerY >= ch - paddleHeight) {
-//         playerY = ch - paddleHeight;
-//     }
-
-//     if (playerY <= 0) {
-//         playerY = 0;
-//     }
-// }
 
 // Ball speed change
 function speedUp() {
@@ -300,7 +274,57 @@ function set() {
     }
 }
 
+function playeru() {
+    if(document.body.clientWidth/document.body.clientHeight > 2.1) {
+        arrowU.addEventListener("mouseover", () => {
+            friction = 1.1;
+            if(velY > -speed) {
+                velY-=2;
+            }
+        })
+        arrowU.addEventListener("mouseout", () => {
+            friction = 0.85;
+        })
+    
+        arrowD.addEventListener("mousemove", () => {
+            friction = 1.1;
+            if(velY < speed) {
+                velY+=2;
+            }
+        })
+        arrowD.addEventListener("mouseout", () => {
+            friction = 0.85;
+        })
+
+        if(velY > 6) {
+            velY= 6;
+        }else if(velY < -6) {
+            velY = -6;
+        } else {
+            velY *= friction;
+        }
+
+ 
+
+        playerY +=velY;
+    
+        if (playerY >= ch - paddleHeight) {
+            playerY = ch - paddleHeight;
+        }
+    
+        if (playerY <= 0) {
+            playerY = 0;
+        }
+    }
+    else {
+        canvas.addEventListener("mousemove", playerPosition);
+    }
+
+
+}
+
 function game () {
+    // playerUpdate();
     table();
     ball();
     player();
@@ -308,7 +332,8 @@ function game () {
     aiPosition();
     collistions();
     set();
-    playerUpdate();
+    playeru();
+
 }
 
 function startGame() {
@@ -317,7 +342,7 @@ function startGame() {
     if (!startGameMessage.classList.contains('none')){
         startGameMessage.classList.toggle('none');
     }
-    setInterval(game, 100);
+    setInterval(game, 20);
 }
 
 function phonePositionCheck() {
@@ -352,7 +377,7 @@ phonePositionCheck()
 
 refreshButton.addEventListener("click", refresh);
 startButton.addEventListener("click", startGame);
-canvas.addEventListener("mousemove", playerPosition);
+
 
 
 
