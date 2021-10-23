@@ -8,10 +8,7 @@ let arrowD = document.getElementById('arrowDown');
 
 if(document.body.clientWidth/document.body.clientHeight > 2.1) {
     canvas.height = docHigh* 0.95;
-    canvas.width = canvas.height * 1.6;
-    if((navigator.userAgent.indexOf("Win") != -1)) {
-        canvas.width = canvas.height * 2;
-    }
+    canvas.width = canvas.height * 2;
 } else {
     canvas.width = docWidth * 0.8;
     canvas.height = canvas.width * 0.5;
@@ -356,7 +353,7 @@ function startGame() {
     setInterval(game, 15);
 }
 
-function phoneCheck() {
+function addingControlButtons() {
     let con = document.getElementById('control');
 
     if((navigator.userAgent.indexOf("Android") != -1)) {
@@ -382,7 +379,6 @@ function wideScreenSupport() {
 //Execution and Event listeners
 wideScreenSupport();
 table();
-phoneCheck();
 
 if((navigator.userAgent.indexOf("Win") != -1)) {
     document.addEventListener("mousemove", playerPosition);
