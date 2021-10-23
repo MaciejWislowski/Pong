@@ -8,7 +8,7 @@ let arrowD = document.getElementById('arrowDown');
 
 if(document.body.clientWidth/document.body.clientHeight > 2.1) {
     canvas.height = docHigh* 0.95;
-    canvas.width = canvas.height * 1.6;
+    canvas.width = canvas.height * 1.8;
 } else {
     canvas.width = docWidth * 0.8;
     canvas.height = canvas.width * 0.5;
@@ -17,7 +17,7 @@ if(document.body.clientWidth/document.body.clientHeight > 2.1) {
 /* ====== V connected with player speed ====== */
 var speed = 2;
 var velY = 0;
-var friction = 0.93;
+var friction = 1;
 
 const cw = canvas.width;
 const ch = canvas.height;
@@ -276,20 +276,33 @@ function set() {
 
 function playeru() {
     if(document.body.clientWidth/document.body.clientHeight > 2.1) {
-        arrowU.addEventListener("click", () => {
+        arrowU.addEventListener("touchstart", () => {
+            friction = 1.1;
             if(velY > -speed) {
-                velY-=10;
+                velY-=2;
             }
+        })
+        arrowU.addEventListener("touchend", () => {
+            friction = 0.85;
         })
     
-        arrowD.addEventListener("click", () => {
+        arrowD.addEventListener("touchstart", () => {
+            friction = 1.1;
             if(velY < speed) {
-                velY+=10;
+                velY+=2;
             }
         })
+        arrowD.addEventListener("touchend", () => {
+            friction = 0.85;
+        })
 
-
+        if(velY > 6) {
+            velY= 6;
+        }else if(velY < -6) {
+            velY = -6;
+        } else {
             velY *= friction;
+        }
 
  
 
