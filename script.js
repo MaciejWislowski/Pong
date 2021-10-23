@@ -8,7 +8,7 @@ let arrowD = document.getElementById('arrowDown');
 
 if(document.body.clientWidth/document.body.clientHeight > 2.1) {
     canvas.height = docHigh* 0.95;
-    canvas.width = canvas.height * 1.7;
+    canvas.width = canvas.height * 1.8;
 } else {
     canvas.width = docWidth * 0.8;
     canvas.height = canvas.width * 0.5;
@@ -266,7 +266,7 @@ function set() {
 }
 
 function playerUpdate() {
-    if((navigator.userAgent.indexOf("Android") == 1)) {
+    if((navigator.userAgent.indexOf("Android") != -1)) {
         arrowU.addEventListener("touchstart", () => {
             friction = 1.1;
             if(velY > -speed) {
@@ -307,47 +307,6 @@ function playerUpdate() {
     }
     
     else {
-        
-            arrowU.addEventListener("mouseover", () => {
-                friction = 1.1;
-                if(velY > -speed) {
-                    velY-=2;
-                }
-            })
-            arrowU.addEventListener("mouseout", () => {
-                friction = 0.85;
-            })
-        
-            arrowD.addEventListener("mouseover", () => {
-                friction = 1.1;
-                if(velY < speed) {
-                    velY+=2;
-                }
-            })
-            arrowD.addEventListener("mouseout", () => {
-                friction = 0.85;
-            })
-    
-            if(velY > 6) {
-                velY= 6;
-            }else if(velY < -6) {
-                velY = -6;
-            } else {
-                velY *= friction;
-            }
-    
-            playerY +=velY;
-        
-            if (playerY >= ch - paddleHeight) {
-                playerY = ch - paddleHeight;
-            }
-        
-            if (playerY <= 0) {
-                playerY = 0;
-            }
-        
-
-
         canvas.addEventListener("mousemove", playerPosition);
     }
 
@@ -372,7 +331,7 @@ function startGame() {
     if (!startGameMessage.classList.contains('none')){
         startGameMessage.classList.toggle('none');
     }
-    setInterval(game, 20);
+    setInterval(game, 15);
 }
 
 function phonePositionCheck() {
