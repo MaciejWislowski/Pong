@@ -1,5 +1,6 @@
 // Global variables
 var doc = document.documentElement;
+
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let docWidth = document.body.clientWidth;
@@ -7,11 +8,11 @@ let docHigh = document.body.clientHeight;
 let arrowU = document.getElementById('arrowUp');
 let arrowD = document.getElementById('arrowDown');
 
-if(document.body.clientWidth/document.body.clientHeight > 2.1) {
-    canvas.height = docHigh* 0.80;
+if(document.body.clientWidth/document.body.clientHeight > 2.05) {
+    canvas.height = docHigh* 0.90;
     canvas.width = canvas.height * 2;
 } else {
-    canvas.width = docWidth * 0.8;
+    canvas.width = docWidth * 0.9;
     canvas.height = canvas.width * 0.5;
 }
 
@@ -346,10 +347,17 @@ function startGame() {
     if (!startGameMessage.classList.contains('none')){
         startGameMessage.classList.toggle('none');
     }
-    if(doc.requestFullscreen) {
-        doc.requestFullscreen();
+
+
+    if(window.innerHeight > window.innerWidth) {
+        orientationMessage.classList.remove('none');
+    } else {
+        if(doc.requestFullscreen) {
+            doc.requestFullscreen();
+        }
+        setInterval(game, 15);
     }
-    setInterval(game, 15);
+
 }
 
 function addingControlButtons() {
@@ -366,7 +374,7 @@ function refresh() {
 
 function wideScreenSupport() {
  
-    if(document.body.clientWidth/document.body.clientHeight > 2.1) {
+    if(document.body.clientWidth/document.body.clientHeight > 2.05) {
         let mainContainer = document.getElementById('main-container');
 
         mainContainer.classList.toggle('grid-container');

@@ -177,6 +177,9 @@ canvas {
 
 /*#endregion Messages*/
 
+.message-txt {
+    text-align: center;
+}
 /*#region MediaQueries*/
 @media only screen and (max-width: 1300px) {
 

@@ -48,7 +48,7 @@ Update 0.1
 - Create a board 
 - Create a paddles
 - Create a ball
-- add collision detection with board borders
+- Add collision detection with board borders
 
 
 
