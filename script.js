@@ -345,7 +345,9 @@ function startGame() {
     if (!startGameMessage.classList.contains('none')){
         startGameMessage.classList.toggle('none');
     }
-
+    if((navigator.userAgent.indexOf("Android") != -1)) {
+        document.requestFullscreen();
+    }
     setInterval(game, 15);
 }
 
@@ -373,9 +375,6 @@ function wideScreenSupport() {
 }
 
 //Execution and Event listener
-if((navigator.userAgent.indexOf("Android") != -1)) {
-    document.requestFullscreen();
-}
 wideScreenSupport();
 table();
 
