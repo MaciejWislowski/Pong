@@ -7,20 +7,10 @@ let arrowU = document.getElementById('arrowUp');
 let arrowD = document.getElementById('arrowDown');
 
 if(document.body.clientWidth/document.body.clientHeight > 2.1) {
-    if((navigator.userAgent.indexOf("Win") != -1)) {
-        canvas.height = docHigh* 0.80;
-    }
-    else {
-        canvas.height = docHigh* 0.60;
-    }
+    canvas.height = docHigh* 0.80;
     canvas.width = canvas.height * 2;
 } else {
-    if((navigator.userAgent.indexOf("Win") != -1)) {
-        canvas.width = docWidth * 0.8;
-    }
-    else {
-        canvas.width = docWidth * 0.6;
-    }
+    canvas.width = docWidth * 0.8;
     canvas.height = canvas.width * 0.5;
 }
 
@@ -382,7 +372,10 @@ function wideScreenSupport() {
     }
 }
 
-//Execution and Event listeners
+//Execution and Event listener
+if((navigator.userAgent.indexOf("Android") != -1)) {
+    document.requestFullscreen();
+}
 wideScreenSupport();
 table();
 
