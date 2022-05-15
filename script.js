@@ -7,10 +7,20 @@ let arrowU = document.getElementById('arrowUp');
 let arrowD = document.getElementById('arrowDown');
 
 if(document.body.clientWidth/document.body.clientHeight > 2.1) {
-    canvas.height = docHigh* 0.95;
+    if((navigator.userAgent.indexOf("Win") != -1)) {
+        canvas.height = docHigh* 0.80;
+    }
+    else {
+        canvas.height = docHigh* 0.60;
+    }
     canvas.width = canvas.height * 2;
 } else {
-    canvas.width = docWidth * 0.8;
+    if((navigator.userAgent.indexOf("Win") != -1)) {
+        canvas.width = docWidth * 0.8;
+    }
+    else {
+        canvas.width = docWidth * 0.6;
+    }
     canvas.height = canvas.width * 0.5;
 }
 
@@ -111,7 +121,6 @@ function aiPosition () {
             aiY += ballSpeedMax/3+playerScore/11*(playerSet+1);
         }
     }
-
     // AI movement on players part of board
     else if (ballX <= cw/2 && ballX > 2*playerX) {
         if (middlePaddle-middleBall > 0.1 * ch) {
@@ -123,7 +132,7 @@ function aiPosition () {
     }
 }
 
-// All collisions set up
+// Collisions set up
 function collistions() {
 
     // Colisions with top and bottom line
@@ -347,9 +356,6 @@ function startGame() {
         startGameMessage.classList.toggle('none');
     }
 
-    if(window.innerHeight > window.innerWidth) {
-        orientationMessage.classList.remove('none');
-    } else
     setInterval(game, 15);
 }
 
