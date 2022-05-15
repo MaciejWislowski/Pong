@@ -8,7 +8,7 @@ let docHigh = document.body.clientHeight;
 let arrowU = document.getElementById('arrowUp');
 let arrowD = document.getElementById('arrowDown');
 
-if(document.body.clientWidth/document.body.clientHeight > 2.05) {
+if(document.body.clientWidth/document.body.clientHeight > 2) {
     canvas.height = docHigh* 0.90;
     canvas.width = canvas.height * 2;
 } else {
@@ -374,7 +374,7 @@ function refresh() {
 
 function wideScreenSupport() {
  
-    if(document.body.clientWidth/document.body.clientHeight > 2.05) {
+    if(document.body.clientWidth/document.body.clientHeight > 2) {
         let mainContainer = document.getElementById('main-container');
 
         mainContainer.classList.toggle('grid-container');
