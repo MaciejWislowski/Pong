@@ -1,6 +1,7 @@
 // Global variables
 var doc = document.documentElement;
 
+
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let docWidth = document.body.clientWidth;
@@ -369,7 +370,13 @@ function addingControlButtons() {
 }
 
 function refresh() {
-    location.reload();
+    if(window.innerHeight > window.innerWidth) {    
+        alert("First change screen orientation, then refresh!")
+    }
+    else{
+        location.reload();
+    }
+
 }
 
 function wideScreenSupport() {
