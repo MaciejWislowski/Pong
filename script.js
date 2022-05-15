@@ -1,4 +1,5 @@
 // Global variables
+var doc = document.documentElement;
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let docWidth = document.body.clientWidth;
@@ -345,8 +346,8 @@ function startGame() {
     if (!startGameMessage.classList.contains('none')){
         startGameMessage.classList.toggle('none');
     }
-    if((navigator.userAgent.indexOf("Android") != -1)) {
-        document.requestFullscreen();
+    if(doc.requestFullscreen) {
+        doc.requestFullscreen();
     }
     setInterval(game, 15);
 }
