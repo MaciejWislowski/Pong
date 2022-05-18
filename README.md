@@ -2,6 +2,12 @@
 My pong game
 ------------------------------------------------------------------------------------------------
 
+Update 0.54
+
+- Improved performance on Safari and IE11 browsers
+
+------------------------------------------------------------------------------------------------
+
 Update 0.53
 
 - Fix an issue with MiBrowser and Chrome on Android;

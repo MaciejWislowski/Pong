@@ -353,8 +353,17 @@ function startGame() {
     if(window.innerHeight > window.innerWidth) {
         orientationMessage.classList.remove('none');
     } else {
+        /* Chrome, MiBrowser, Brave */
         if(doc.requestFullscreen) {
             doc.requestFullscreen();
+        }
+        /* Safari */
+        else if (doc.webkitRequestFullscreen) {
+            doc.webkitRequestFullscreen();
+        }
+        /* IE11 */
+        else if (doc.msRequestFullscreen) {
+            doc.msRequestFullscreen();
         }
         setInterval(game, 15);
     }
@@ -370,7 +379,7 @@ function addingControlButtons() {
 }
 
 function refresh() {
-    if(window.innerHeight > window.innerWidth) {    
+    if(window.innerHeight > window.innerWidth) {
         alert("First change screen orientation, then refresh!")
     }
     else{
@@ -380,7 +389,7 @@ function refresh() {
 }
 
 function wideScreenSupport() {
- 
+
     if(document.body.clientWidth/document.body.clientHeight > 2) {
         let mainContainer = document.getElementById('main-container');
 
