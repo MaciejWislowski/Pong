@@ -400,7 +400,7 @@ function wideScreenSupport() {
 }
 
 //Execution and Event listener
-screen.orientation.lock("landscape");
+screen.orientation.lock("landscape-primary");
 wideScreenSupport();
 table();
 
