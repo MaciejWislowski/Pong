@@ -400,6 +400,7 @@ function wideScreenSupport() {
 }
 
 //Execution and Event listener
+screen.orientation.lock("landscape");
 wideScreenSupport();
 table();
 
@@ -407,6 +408,9 @@ if((navigator.userAgent.indexOf("Win") != -1)) {
     document.addEventListener("mousemove", playerPosition);
 }
 if((navigator.userAgent.indexOf("Android") != -1)) {
+    document.addEventListener("touchmove", playerPositionMobile);
+}
+if((navigator.userAgent.indexOf("IOS") != -1)) {
     document.addEventListener("touchmove", playerPositionMobile);
 }
 refreshButton.addEventListener("click", refresh);
