@@ -9,25 +9,16 @@
     
 </head>
 <body>
-    <div class="control none" id="control">
-        <div class="arrow" id="arrowUp">
-            <i class='bx bxs-up-arrow control-arrow'></i>
-        </div>
-
-        <div class="arrow" id="arrowDown">
-            <i class='bx bxs-down-arrow control-arrow' ></i>
-        </div>
-    </div>
-    <div class="grid-container" id="main-container">
+    <div class="grid-container blurred" id="main-container">
         <div class="scoreboard grid-item">
             <div class="sc sc1">Pong 0.542</div>
             <div class="sc sc2"></div>
             <div class="sc sc3"></div>
             <div class="sc sc4">Set</div>
-            <div class="sc sc5">Player</div>
+            <div class="sc sc5 playerNameSc">Player</div>
             <div class="sc sc6" id="0003">0</div>
             <div class="sc sc7">Score</div>
-            <div class="sc sc8">Player</div>
+            <div class="sc sc8 playerNameSc">Player</div>
             <div class="sc sc9" id="0001">0</div>
             <div class="sc sc10"></div>
             <div class="sc sc11"></div>
@@ -44,14 +35,16 @@
     </div>
     <div class="messages">
         <div class="start__screen message" id="start__screen">
-            <p class="message-txt">Welcome in Pong game!</p>
+            <p class="message-tit">Welcome in Pong game!</p>
+            <p class="message-txt">What is your name?</p>
+            <p class="message-txt"><input class="input" type='text' id="userName" value="Unknown"></p>
             <div class="button" id="startButton">
                 <p>Start the game!</p>
             </div>
         </div>
 
         <div class="orientation__change message none" id="orientation__change">
-            <p class="message-txt">For better experience <br> use landscape orientation please :)</p>
+            <p class="message-tit">For better experience <br> use landscape orientation please :)</p>
             <div class="button" id="refreshButton">
                 <p>Refresh!</p>
             </div>

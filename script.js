@@ -1,7 +1,6 @@
 // Global variables
 var doc = document.documentElement;
 
-
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let docWidth = document.body.clientWidth;
@@ -16,11 +15,6 @@ if(document.body.clientWidth/document.body.clientHeight > 2) {
     canvas.width = docWidth * 0.9;
     canvas.height = canvas.width * 0.5;
 }
-
-/* ====== V connected with player speed ====== */
-var speed = 2;
-var velY = 0;
-var friction = 1;
 
 const cw = canvas.width;
 const ch = canvas.height;
@@ -91,6 +85,16 @@ function table() {
     }
 }
 
+function wideScreenSupport() {
+
+    if(document.body.clientWidth/document.body.clientHeight > 2) {
+        let mainContainer = document.getElementById('main-container');
+
+        mainContainer.classList.toggle('grid-container');
+        mainContainer.classList.toggle('grid-container-alternative');
+
+    }
+}
 
 //-----------------------------------------   Mechanics   ------------------------------------//
 
@@ -281,53 +285,15 @@ function set() {
     }
 }
 
-// function playerUpdate() {
-//     if((navigator.userAgent.indexOf("Android") != -1)) {
-//         arrowU.addEventListener("touchstart", () => {
-//             friction = 1.1;
-//             if(velY > -speed) {
-//                 velY-=2;
-//             }
-//         })
-//         arrowU.addEventListener("touchend", () => {
-//             friction = 0.85;
-//         })
-    
-//         arrowD.addEventListener("touchstart", () => {
-//             friction = 1.1;
-//             if(velY < speed) {
-//                 velY+=2;
-//             }
-//         })
-//         arrowD.addEventListener("touchend", () => {
-//             friction = 0.85;
-//         })
+//------------------------------------------   Effects   -------------------------------------//
 
-//         if(velY > 6) {
-//             velY= 6;
-//         }else if(velY < -6) {
-//             velY = -6;
-//         } else {
-//             velY *= friction;
-//         }
+function toggleClass(IDName, className){
+    const toggleItem = document.getElementById(IDName)
 
-//         playerY +=velY;
-    
-//         if (playerY >= ch - paddleHeight) {
-//             playerY = ch - paddleHeight;
-//         }
-    
-//         if (playerY <= 0) {
-//             playerY = 0;
-//         }
-//     }
-    
-//     else {
-//         document.addEventListener("mousemove", playerPosition);
-//     }
+    toggleItem.classList.toggle(className);
+}
 
-
-// }
+//-----------------------------------------   Execution   ------------------------------------//
 
 function game () {
     // playerUpdate();
@@ -344,38 +310,42 @@ function game () {
 function startGame() {
     const startGameMessage = document.getElementById("start__screen");
     const orientationMessage = document.getElementById('orientation__change');
+    var playerName = document.getElementById('userName').value;
 
-    if (!startGameMessage.classList.contains('none')){
-        startGameMessage.classList.toggle('none');
+    if(playerName.length > 11) {
+        alert("Please choose shorter name!")
+    }
+    else {
+        
+        document.getElementsByClassName('playerNameSc')[0].innerText=playerName;
+        document.getElementsByClassName('playerNameSc')[1].innerText=playerName;
+
+        if (!startGameMessage.classList.contains('none')){
+            startGameMessage.classList.toggle('none');
+        }
+
+
+        if(document.body.clientHeight > document.body.clientWidth) {
+            orientationMessage.classList.remove('none');
+        } 
+        else {
+            /* Chrome, MiBrowser, Brave */
+            if(doc.requestFullscreen) {
+                doc.requestFullscreen();
+            }
+            /* Safari */
+            else if (doc.webkitRequestFullscreen) {
+                doc.webkitRequestFullscreen();
+            }
+            /* IE11 */
+            else if (doc.msRequestFullscreen) {
+                doc.msRequestFullscreen();
+            }
+            toggleClass('main-container','blurred');
+            setInterval(game, 15);
+    }
     }
 
-
-    if(window.innerHeight > window.innerWidth) {
-        orientationMessage.classList.remove('none');
-    } else {
-        /* Chrome, MiBrowser, Brave */
-        if(doc.requestFullscreen) {
-            doc.requestFullscreen();
-        }
-        /* Safari */
-        else if (doc.webkitRequestFullscreen) {
-            doc.webkitRequestFullscreen();
-        }
-        /* IE11 */
-        else if (doc.msRequestFullscreen) {
-            doc.msRequestFullscreen();
-        }
-        setInterval(game, 15);
-    }
-
-}
-
-function addingControlButtons() {
-    let con = document.getElementById('control');
-
-    if((navigator.userAgent.indexOf("Android") != -1)) {
-        con.classList.toggle('none');
-    }
 }
 
 function refresh() {
@@ -388,19 +358,8 @@ function refresh() {
 
 }
 
-function wideScreenSupport() {
-
-    if(document.body.clientWidth/document.body.clientHeight > 2) {
-        let mainContainer = document.getElementById('main-container');
-
-        mainContainer.classList.toggle('grid-container');
-        mainContainer.classList.toggle('grid-container-alternative');
-
-    }
-}
-
 //Execution and Event listener
-screen.orientation.lock("landscape-primary");
+
 wideScreenSupport();
 table();
 
