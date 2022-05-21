@@ -8,14 +8,19 @@ let docHigh = document.body.clientHeight;
 let arrowU = document.getElementById('arrowUp');
 let arrowD = document.getElementById('arrowDown');
 
-if(document.body.clientWidth/document.body.clientHeight > 2) {
+if(document.body.clientWidth/document.body.clientHeight > 2.1) {
     canvas.height = docHigh* 0.90;
     canvas.width = canvas.height * 2;
-} else {
-    canvas.width = docWidth * 0.9;
+} else if (document.body.clientWidth/document.body.clientHeight > 1.5) {
+    canvas.width = docWidth * 0.8;
+    canvas.height = canvas.width * 0.5;
+}
+else {
+    canvas.width = docWidth * 0.90;
     canvas.height = canvas.width * 0.5;
 }
 
+var pauseBlock = 0;
 const cw = canvas.width;
 const ch = canvas.height;
 
@@ -36,8 +41,8 @@ let aiY = 0.2 * cw;
 const lineWidth = 0.006 * cw;
 const lineHeight = 0.015 * cw;
 
-let ballSpeedX = -0.004 * cw;
-let ballSpeedY = -0.004 * cw;
+var ballSpeedX = -0.004 * cw;
+var ballSpeedY = -0.004 * cw;
 
 let playerScore = 0;
 let aiScore = 0;
@@ -45,7 +50,7 @@ let aiScore = 0;
 let playerSet = 0;
 let aiSet = 0;
 
-let ballSpeedMax = 0.015 * cw;
+var ballSpeedMax = 0.015 * cw;
 
 
 topCanvas = canvas.offsetTop;
@@ -56,11 +61,14 @@ console.log(topCanvas);
 //---------------------------------------------------------------------------------------------//
 
 // --------------------------------   Draw on canvas ------------------------------------------//
+
+// Draw AI paddle
 function ai() { 
     ctx.fillStyle = "darkgrey";
     ctx.fillRect(aiX, aiY, paddleWidth, paddleHeight); 
 }
 
+// Draw the ball
 function ball() {
     ctx.fillStyle = "#ffff";
     ctx.fillRect(ballX, ballY, ballSize, ballSize);
@@ -69,24 +77,26 @@ function ball() {
     ballY += ballSpeedY;
 }
 
+// Draw the player paddle
 function player() {
     ctx.fillStyle = "grey";
     ctx.fillRect(playerX, playerY, paddleWidth, paddleHeight); 
 }
 
+// Draw the board and the middle line
 function table() {
-    // board
+    // Draw the board
     ctx.fillStyle = "darkred";
     ctx.fillRect(0, 0, cw, ch);
-    // middle line
+    // Draw the middle line
     for (let linePosition = 0.02 * cw; linePosition < ch; linePosition += 0.03 * cw) {
         ctx.fillStyle = "black";
         ctx.fillRect(cw/2 - lineWidth/2, linePosition - lineHeight/2, lineWidth, lineHeight);
     }
 }
 
+// In case of the wider screen function is moving the scoreboard from to to the left
 function wideScreenSupport() {
-
     if(document.body.clientWidth/document.body.clientHeight > 2) {
         let mainContainer = document.getElementById('main-container');
 
@@ -262,26 +272,60 @@ function set() {
         document.getElementById('0001').innerHTML = playerScore;
     }
     if (playerSet==3) {
-        alert("Congratulations!!! You win!!!");
+        toggleClass('main-container','blurred');
+        let score = document.getElementById('won__score');
+        score.innerText = document.getElementById('userName').value + ': '+ playerSet  + '     ' + 'AI: ' + aiSet;
+        toggleClass('won__screen','none');
         playerSet = 0;
         aiSet = 0;
         playerScore = 0;
         aiScore = 0;
+        
+        ballSpeedMax = 0.015 * cw;
         document.getElementById('0003').innerHTML = playerSet;
         document.getElementById('0004').innerHTML = aiSet;
         document.getElementById('0002').innerHTML = aiScore;
         document.getElementById('0001').innerHTML = playerScore;
+        clearInterval(gameLoop);
     }
     if (aiSet==3) {
-        alert("You are a looser!!!");
+        toggleClass('main-container','blurred');
+        let score = document.getElementById('lost__score');
+        score.innerText = 'AI: ' + aiSet + '     ' + document.getElementById('userName').value + ': '+ playerSet;
+        toggleClass('lost__screen','none');
         playerSet = 0;
         aiSet = 0;
         playerScore = 0;
         aiScore = 0;
+        ballSpeedMax = 0.015 * cw;
+
         document.getElementById('0003').innerHTML = playerSet;
         document.getElementById('0004').innerHTML = aiSet;
         document.getElementById('0002').innerHTML = aiScore;
         document.getElementById('0001').innerHTML = playerScore;
+        clearInterval(gameLoop);
+    }
+}
+
+// Pause the game
+function pause(e) {
+    if (e.code == "Space") {
+        toggleClass('main-container','blurred');
+        toggleClass('pause__screen','none');
+        clearInterval(gameLoop);
+            document.removeEventListener('keypress', pause);
+        document.addEventListener('keypress', unpause);
+    }
+}
+
+function unpause(e) {
+    if (e.code == "Space") {
+        toggleClass('pause__screen','none');
+        toggleClass('main-container','blurred');
+        pauseBlock--;
+        gameLoop = setInterval(game, 15);
+        document.removeEventListener('keypress', unpause);
+        document.addEventListener('keypress', pause);
     }
 }
 
@@ -307,6 +351,7 @@ function game () {
 
 }
 
+// Function describe what is happening after clicking the start game button
 function startGame() {
     const startGameMessage = document.getElementById("start__screen");
     const orientationMessage = document.getElementById('orientation__change');
@@ -322,6 +367,12 @@ function startGame() {
 
         if (!startGameMessage.classList.contains('none')){
             startGameMessage.classList.toggle('none');
+        }
+        if (!lost__screen.classList.contains('none')){
+            lost__screen.classList.toggle('none');
+        }
+        if (!won__screen.classList.contains('none')){
+            won__screen.classList.toggle('none');
         }
 
 
@@ -341,8 +392,10 @@ function startGame() {
             else if (doc.msRequestFullscreen) {
                 doc.msRequestFullscreen();
             }
+
             toggleClass('main-container','blurred');
-            setInterval(game, 15);
+            gameLoop = setInterval(game, 15);
+            canvas.addEventListener("touchstart", DblClk);
     }
     }
 
@@ -363,17 +416,28 @@ function refresh() {
 wideScreenSupport();
 table();
 
-if((navigator.userAgent.indexOf("Win") != -1)) {
+if((navigator.userAgent.indexOf("Win") != -1 || 
+    navigator.userAgent.indexOf("Mac OS X") != -1)) {
     document.addEventListener("mousemove", playerPosition);
+
 }
-if((navigator.userAgent.indexOf("Android") != -1)) {
+if((navigator.userAgent.indexOf("Android") != -1 ||
+    navigator.userAgent.indexOf("iPhone") != -1 ||
+    navigator.userAgent.indexOf("iPad") != -1)) {
     document.addEventListener("touchmove", playerPositionMobile);
+
 }
-if((navigator.userAgent.indexOf("IOS") != -1)) {
-    document.addEventListener("touchmove", playerPositionMobile);
-}
+document.addEventListener('keypress', pause);
+returnToMenuButton.addEventListener("click", refresh);
+startAgainButton.addEventListener("click", startGame);
+returnToMenuButtonW.addEventListener("click", refresh);
+startAgainButtonW.addEventListener("click", startGame);
 refreshButton.addEventListener("click", refresh);
 startButton.addEventListener("click", startGame);
+
+
+
+
 
 
 

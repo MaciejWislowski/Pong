@@ -34,20 +34,55 @@
         <div class="item2 grid-item"><canvas></canvas></div>
     </div>
     <div class="messages">
+        <!-- Welcome message -->
         <div class="start__screen message" id="start__screen">
             <p class="message-tit">Welcome in Pong game!</p>
-            <p class="message-txt">What is your name?</p>
-            <p class="message-txt"><input class="input" type='text' id="userName" value="Unknown"></p>
-            <div class="button" id="startButton">
-                <p>Start the game!</p>
+            <div class="description_group">
+                <p class="message-txt">What is your name?</p>
+                <p class="message-txt"><input class="input" type='text' id="userName" value="Player"></p>
             </div>
-        </div>
+            <div class="button_group">
+                <!--<div class="button" id="optionButton"><p>Options</p></div> -->
+                <div class="button" id="startButton"><p>Start the game</p></div>
+            </div>
 
+
+        </div>
+        <!-- Massage when wrong (portrait) orientation of screen is applied -->
         <div class="orientation__change message none" id="orientation__change">
             <p class="message-tit">For better experience <br> use landscape orientation please :)</p>
             <div class="button" id="refreshButton">
                 <p>Refresh!</p>
             </div>
+        </div>
+        <!-- Win message -->
+        <div class="message none" id="won__screen">
+            <p class="message-tit">You have won!</p>
+            <p class="message-txt" id="won__score"></p>
+            <p class="message-txt">Congratulation! Excelent score!</p>
+            <div class="button" id="startAgainButtonW">
+                <p>Start again</p>
+            </div>
+            <div class="button" id="returnToMenuButtonW">
+                <p>Return to Menu</p>
+            </div>
+        </div>
+        <!-- Loose message -->
+        <div class="message none" id="lost__screen">
+            <p class="message-tit">You have lost!</p>
+            <p class="message-txt" id="lost__score"></p>
+            <p class="message-txt">Don't worry! Next time will be better!</p>
+            <div class="button" id="startAgainButton">
+                <p>Start again</p>
+            </div>
+            <div class="button" id="returnToMenuButton">
+                <p>Return to Menu</p>
+            </div>
+        </div>
+        
+        <!-- Pause message -->
+        <div class="message none" id="pause__screen">
+            <p class="message-tit">Pause</p>
         </div>
     </div>
     <script src="script.js"></script>

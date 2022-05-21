@@ -2,6 +2,15 @@
 My pong game
 ------------------------------------------------------------------------------------------------
 
+
+Update 0.55
+
+- Improved in game messages;
+- Prepared menu to add options;
+- Added possibiliy to add player name
+- Added pause game feature;
+
+------------------------------------------------------------------------------------------------
 Update 0.54
 
 - Added possibility to play on IOS;

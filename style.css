@@ -195,6 +195,14 @@ canvas {
     margin: 5% 5%;
 }
 
+.description_group {
+    display: grid;
+}
+
+.button_group {
+    display: grid;
+}
+
 .message .button {
     display:inline-flex;
     background-color: gray;
@@ -221,80 +229,56 @@ canvas {
 /*#endregion Effects*/
 
 /*#region MediaQueries*/
-@media only screen and (max-width: 1300px) {
-
-.messages {
-    z-index: 1;
+/*#region Between 1200-800*/
+@media only screen and (max-width: 1200px){
+    .grid-container-alternative .scoreboard .sc {
+        font-size: 120%;
+    }
+    .message {
+        position:fixed;
+        top:0%;
+        bottom:0%;
+        left:0%;
+        width:100%;
+        gap: 0;
+    }
+    .message-tit {
+        font-size:350%;
+        margin: 0%;
+    }
+    .message-txt {
+        font-size:250%;
+        margin: 0%;
+    }
 }
-
-.message {
-    position: absolute;
-    left: 0%;
-    width:100%;
-    top: 0%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    border: 0.4rem solid black;
-    background-color: darkred;
-    flex-wrap: nowrap;
-}
-
-.message-txt {
-    display: inline-flex;
-    color: gray;
-    font-size: 100%;
-    justify-self: center;
-    text-align: center;
-    margin: 5% 5%;
-}
-
-.message .button {
-    display:inline-flex;
-    background-color: gray;
-    color:darkred;
-    font-size: larger;
-    cursor: pointer;
-    text-align: center;
-    justify-content: center;
-    margin: 5% 5%;
-    font-size: 100%;
-}
-}
-
+/*#endregion Between 1200-800*/
+/*#region Between 800-300*/
 @media only screen and (max-width: 800px) {
+    .message {
+        position:fixed;
+        top:0%;
+        bottom:0%;
+        left:0%;
+        width:100%;
+        gap: 0;
+    }
+
     .sc {
         font-size: 80%;
     }
 
+    .message-tit {
+        font-size:250%;
+        margin: 0%;
+    }
     .message-txt {
-        display: inline-flex;
-        color: gray;
-        font-size: 80%;
-        justify-self: center;
-        text-align: center;
-        margin: 5% 5%;
+        font-size:150%;
+        margin: 0%;
     }
 }
-
-  @media only screen and (max-width: 300px) {
-    .sc {
-      font-size: 20%;
-    }
-
-    .message-txt {
-        display: inline-flex;
-        color: gray;
-        font-size: 20%;
-        justify-self: center;
-        text-align: center;
-        margin: 5% 5%;
-    }
-}
-
+/*#endregion Under 800*/
 
 /*#endregion MediaQueries*/
-
 
 /*#region Control */
 .arrow {
