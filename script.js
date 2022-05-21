@@ -395,7 +395,6 @@ function startGame() {
 
             toggleClass('main-container','blurred');
             gameLoop = setInterval(game, 15);
-            canvas.addEventListener("touchstart", DblClk);
     }
     }
 
