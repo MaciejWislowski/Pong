@@ -11,7 +11,7 @@
 <body>
     <div class="grid-container blurred" id="main-container">
         <div class="scoreboard sc-default grid-item" id="scoreboard">
-            <div class="sc sc1">Pong 0.56</div>
+            <div class="sc sc1">Pong 0.57</div>
             <div class="sc sc2"></div>
             <div class="sc sc3"></div>
             <div class="sc sc4">Set</div>
@@ -50,36 +50,32 @@
             <p class="message-tit">Options</p>
             <form wrap name="Victory conditions" method="get" action="" onsubmit="return false">
                 <fieldset>
-                    <legend>Victory Conditions</legend>
-                    <p>
-                        <label class="radioBtn" for="number0">Pong
-                            <input type="radio" checked value="0" name="number" id="number0" />
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="radioBtn" for="number1">Table tennis
-                            <input type="radio" value="1" name="number" id="number1" />
-                            <span class="checkmark"></span>
-                        </label>
-                    </p>
+                    <legend>Difficulty Level</legend>
+                    <label class="radioBtn" for="number0">Normal
+                        <input type="radio" checked value="0" name="number" id="number0" />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radioBtn" for="number1">Hard
+                        <input type="radio" value="1" name="number" id="number1" />
+                        <span class="checkmark"></span>
+                    </label>
                 </fieldset>
             </form>
             <form wrap name="Color Schema" method="get" action="" onsubmit="return false">
                 <fieldset>
                     <legend>Color Schema</legend>
-                    <p>
-                        <label class="radioBtn" for="color0">Default
-                            <input type="radio" checked value="2" name="color" id="color0" />
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="radioBtn" for="color1">Pong
-                            <input type="radio" value="3" name="color" id="color1" />
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="radioBtn" for="color2">Table tennis
-                            <input type="radio" value="4" name="color" id="color2" />
-                            <span class="checkmark"></span>
-                        </label>
-                    </p>
+                    <label class="radioBtn" for="color0">Default
+                        <input type="radio" checked value="2" name="color" id="color0" />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radioBtn" for="color1">Pong
+                        <input type="radio" value="3" name="color" id="color1" />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radioBtn" for="color2">Table tennis
+                        <input type="radio" value="4" name="color" id="color2" />
+                        <span class="checkmark"></span>
+                    </label>
                 </fieldset>
             </form>
             <div class="button" id="optionReturnButton">
@@ -119,7 +115,7 @@
         </div>
         
         <!-- Pause message -->
-        <div class="message none" id="pause__screen">
+        <div class="message msg-default none" id="pause__screen">
             <p class="message-tit">Pause</p>
         </div>
     </div>

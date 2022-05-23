@@ -2,6 +2,7 @@
 var doc = document.documentElement;
 
 var vicCondition = 0;
+var diffLevel = 0;
 var colorSchema = 0;
 
 const canvas = document.querySelector('canvas');
@@ -233,31 +234,41 @@ function wideScreenSupport() {
 function aiPosition () {
     var middlePaddle = aiY + paddleHeight/2;
     var middleBall = ballY + ballSize/2;
+    var hardFactor;
 
+    if(diffLevel == 0) {
+        hardFactor = 1;
+    }
+    else {
+        hardFactor = 1.5;
+    }
    // Ai paddle movement on ai part of board
-    if(ballX > cw/2) {
-        if (middlePaddle - middleBall > 0.2 * ch) {
-            aiY -= ballSpeedMax+playerScore/11*(playerSet+1); 
+   
+        if(ballX > cw/2) {
+            if (middlePaddle - middleBall > 0.2 * ch) {
+                aiY -= hardFactor*ballSpeedMax+playerScore/11*(playerSet+1); 
+            }
+            else if (middlePaddle - middleBall > 0.05 * ch) {
+                aiY -= hardFactor*ballSpeedMax/3+playerScore/11*(playerSet+1);
+            }
+            else if (middlePaddle - middleBall < -0.2 * ch) {
+                aiY += hardFactor*ballSpeedMax+playerScore/11*(playerSet+1);
+            }
+            else if (middlePaddle - middleBall < -0.05 * ch) {
+                aiY += hardFactor*ballSpeedMax/3+playerScore/11*(playerSet+1);
+            }
         }
-        else if (middlePaddle - middleBall > 0.05 * ch) {
-            aiY -= ballSpeedMax/3+playerScore/11*(playerSet+1);
+        // AI movement on players part of board
+        else if (ballX <= cw/2 && ballX > 2*playerX) {
+            if (middlePaddle-middleBall > 0.1 * ch) {
+                aiY -= hardFactor*ballSpeedMax/5;
+            }
+            else if (middlePaddle - middleBall < - 0.1 * ch) {
+                aiY += hardFactor*ballSpeedMax/5;
+            }
         }
-        else if (middlePaddle - middleBall < -0.2 * ch) {
-            aiY += ballSpeedMax+playerScore/11*(playerSet+1);
-        }
-        else if (middlePaddle - middleBall < -0.05 * ch) {
-            aiY += ballSpeedMax/3+playerScore/11*(playerSet+1);
-        }
-    }
-    // AI movement on players part of board
-    else if (ballX <= cw/2 && ballX > 2*playerX) {
-        if (middlePaddle-middleBall > 0.1 * ch) {
-            aiY -= ballSpeedMax/5;
-        }
-        else if (middlePaddle - middleBall < - 0.1 * ch) {
-            aiY += ballSpeedMax/5;
-        }
-    }
+   
+
 }
 
 // Collisions set up
@@ -521,7 +532,17 @@ function startGame() {
             else if (doc.msRequestFullscreen) {
                 doc.msRequestFullscreen();
             }
+            window.addEventListener('orientationchange',function() {
+                toggleClass('main-container','blurred');
+                toggleClass('pause__screen','none');
+                if(document.body.clientHeight > document.body.clientWidth) {
+                    clearInterval(gameLoop);
+                }
+                else {
+                    gameLoop = setInterval(game, 15);
+                }
 
+            });
             toggleClass('main-container','blurred');
             gameLoop = setInterval(game, 15);
     }
@@ -534,10 +555,10 @@ function optionScreen() {
     toggleClass('start__screen','none');
     toggleClass('options__screen','none');
     document.getElementById('number0').addEventListener('click', function() {
-        vicCondition = 0;
+        diffLevel = 0;
     });
     document.getElementById('number1').addEventListener('click', function() {
-        vicCondition = 1;
+        diffLevel = 1;
     });
     document.getElementById('color0').addEventListener('click', function() {
         colorSchema = 0;
@@ -582,6 +603,12 @@ if((navigator.userAgent.indexOf("Android") != -1 ||
     document.addEventListener("touchmove", playerPositionMobile);
 
 }
+window.addEventListener('load', function() {
+    if(document.body.clientHeight > document.body.clientWidth) {
+        toggleClass('start__screen','none');
+        toggleClass('orientation__change','none');
+    } 
+})
 document.addEventListener('keypress', pause);
 returnToMenuButton.addEventListener("click", refresh);
 startAgainButton.addEventListener("click", startGame);
