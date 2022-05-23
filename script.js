@@ -1,6 +1,9 @@
 // Global variables
 var doc = document.documentElement;
 
+var vicCondition = 0;
+var colorSchema = 0;
+
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let docWidth = document.body.clientWidth;
@@ -64,13 +67,30 @@ console.log(topCanvas);
 
 // Draw AI paddle
 function ai() { 
-    ctx.fillStyle = "darkgrey";
+    if(colorSchema == 0) {
+        ctx.fillStyle = "darkgrey";
+    }
+    if(colorSchema == 1) {
+        ctx.fillStyle = "white";
+    }
+    if(colorSchema == 2) {
+        ctx.fillStyle = "darkred";
+    }
+   
     ctx.fillRect(aiX, aiY, paddleWidth, paddleHeight); 
 }
 
 // Draw the ball
 function ball() {
-    ctx.fillStyle = "#ffff";
+    if(colorSchema == 0) {
+        ctx.fillStyle = "white";
+    }
+    if(colorSchema == 1) {
+        ctx.fillStyle = "white";
+    }
+    if(colorSchema == 2) {
+        ctx.fillStyle = "white";
+    }
     ctx.fillRect(ballX, ballY, ballSize, ballSize);
 
     ballX += ballSpeedX;
@@ -79,20 +99,121 @@ function ball() {
 
 // Draw the player paddle
 function player() {
-    ctx.fillStyle = "grey";
-    ctx.fillRect(playerX, playerY, paddleWidth, paddleHeight); 
+    if(colorSchema == 0) {
+        ctx.fillStyle = "darkgrey";
+    }
+    if(colorSchema == 1) {
+        ctx.fillStyle = "white";
+    }
+    if(colorSchema == 2) {
+        ctx.fillStyle = "darkred";
+    }
+    ctx.fillRect(playerX, playerY, paddleWidth, paddleHeight);
 }
 
 // Draw the board and the middle line
 function table() {
     // Draw the board
-    ctx.fillStyle = "darkred";
+    if(colorSchema == 0) {
+        ctx.fillStyle = "darkred";
+    }
+    if(colorSchema == 1) {
+        ctx.fillStyle = "black";
+    }
+    if(colorSchema == 2) {
+        ctx.fillStyle = "darkgreen";
+    }
     ctx.fillRect(0, 0, cw, ch);
     // Draw the middle line
     for (let linePosition = 0.02 * cw; linePosition < ch; linePosition += 0.03 * cw) {
-        ctx.fillStyle = "black";
+        if(colorSchema == 0) {
+            ctx.fillStyle = "black";
+        }
+        if(colorSchema == 1) {
+            ctx.fillStyle = "white";
+        }
+        if(colorSchema == 2) {
+            ctx.fillStyle = "white";
+        }
         ctx.fillRect(cw/2 - lineWidth/2, linePosition - lineHeight/2, lineWidth, lineHeight);
     }
+    // Board border colors
+    if(colorSchema == 0) {
+        canvas.style.borderColor = 'black';
+    }
+    if(colorSchema == 1) {
+        canvas.style.borderColor = 'white';
+    }
+    if(colorSchema == 2) {
+        canvas.style.borderColor = 'white';
+    }
+}
+
+// Manage color changes on scoreboard - alternative
+function scoreBoard() {
+    if(colorSchema == 0) {
+        if(scoreboard.classList.contains('sc-default')) {
+
+        }
+        if(scoreboard.classList.contains('sc-pong')) {
+            toggleClass('scoreboard','sc-pong');
+            toggleClass('options__screen','msg-pong');
+            toggleArrayClass('message','msg-pong');
+            toggleClass('scoreboard','sc-default');
+            toggleClass('options__screen','msg-default');
+            toggleArrayClass('message','msg-default');
+        }
+        if(scoreboard.classList.contains('sc-tt')) {
+            toggleClass('scoreboard','sc-tt');
+            toggleClass('options__screen','msg-tt');
+            toggleArrayClass('message','msg-tt');
+            toggleClass('scoreboard','sc-default');
+            toggleClass('options__screen','msg-default');
+            toggleArrayClass('message','msg-default');
+        }
+
+    }
+    if(colorSchema == 1) {
+        if(scoreboard.classList.contains('sc-default')) {
+            toggleClass('scoreboard','sc-default');
+            toggleClass('options__screen','msg-default');
+            toggleArrayClass('message','msg-default');
+            toggleClass('scoreboard','sc-pong');
+            toggleClass('options__screen','msg-pong');
+            toggleArrayClass('message','msg-pong');
+        }
+        if(scoreboard.classList.contains('sc-pong')) {
+        }
+        if(scoreboard.classList.contains('sc-tt')) {
+            toggleClass('scoreboard','sc-tt');
+            toggleClass('options__screen','msg-tt');
+            toggleArrayClass('message','msg-tt');
+            toggleClass('scoreboard','sc-pong');
+            toggleClass('options__screen','msg-pong');
+            toggleArrayClass('message','msg-pong');
+        }
+    }
+    if(colorSchema == 2) {
+        if(scoreboard.classList.contains('sc-default')) {
+            toggleClass('scoreboard','sc-default');
+            toggleClass('options__screen','msg-default');
+            toggleArrayClass('message','msg-default');
+            toggleClass('scoreboard','sc-tt');
+            toggleClass('options__screen','msg-tt');
+            toggleArrayClass('message','msg-tt');
+        }
+        if(scoreboard.classList.contains('sc-pong')) {
+            toggleClass('scoreboard','sc-pong');
+            toggleClass('options__screen','msg-pong');
+            toggleArrayClass('message','msg-pong');
+            toggleClass('scoreboard','sc-tt');
+            toggleClass('options__screen','msg-tt');
+            toggleArrayClass('message','msg-tt');
+        }
+        if(scoreboard.classList.contains('sc-tt')) {
+        }
+    }
+
 }
 
 // In case of the wider screen function is moving the scoreboard from to to the left
@@ -332,9 +453,17 @@ function unpause(e) {
 //------------------------------------------   Effects   -------------------------------------//
 
 function toggleClass(IDName, className){
-    const toggleItem = document.getElementById(IDName)
+    let toggleItem = document.getElementById(IDName)
 
     toggleItem.classList.toggle(className);
+}
+
+function toggleArrayClass(IDName, className){
+    let toggleItem = document.getElementsByClassName(IDName);
+
+    for(i = 0; i < toggleItem.length;i++){
+        toggleItem[i].classList.toggle(className);
+    }
 }
 
 //-----------------------------------------   Execution   ------------------------------------//
@@ -400,6 +529,33 @@ function startGame() {
 
 }
 
+// Function describe what is happening when launch options
+function optionScreen() {
+    toggleClass('start__screen','none');
+    toggleClass('options__screen','none');
+    document.getElementById('number0').addEventListener('click', function() {
+        vicCondition = 0;
+    });
+    document.getElementById('number1').addEventListener('click', function() {
+        vicCondition = 1;
+    });
+    document.getElementById('color0').addEventListener('click', function() {
+        colorSchema = 0;
+        table();
+        scoreBoard()
+    });
+    document.getElementById('color1').addEventListener('click', function() {
+        colorSchema = 1;
+        table();
+        scoreBoard()
+    });
+    document.getElementById('color2').addEventListener('click', function() {
+        colorSchema = 2;
+        table();
+        scoreBoard();
+    });
+
+}
 function refresh() {
     if(window.innerHeight > window.innerWidth) {
         alert("First change screen orientation, then refresh!")
@@ -432,7 +588,13 @@ startAgainButton.addEventListener("click", startGame);
 returnToMenuButtonW.addEventListener("click", refresh);
 startAgainButtonW.addEventListener("click", startGame);
 refreshButton.addEventListener("click", refresh);
+// Start the game button on Welcomming message
+optionButton.addEventListener("click", optionScreen)
 startButton.addEventListener("click", startGame);
+optionReturnButton.addEventListener('click', function() {
+    toggleClass('options__screen','none');
+    toggleClass('start__screen','none');
+});
 
 
 

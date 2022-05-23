@@ -17,7 +17,7 @@ body {
 
 canvas {
     border: 0.4rem solid black;
-    cursor: none;
+
 }
 
 .grid-container {
@@ -33,7 +33,11 @@ canvas {
 
     column-gap: 0.5rem;
 }
+#main-container {
+    cursor: none;
+}
 
+/*#region Forms*/
 .input {
     font-size: 100%;
     font-family: 'Courier New', Courier, monospace;
@@ -46,10 +50,94 @@ canvas {
   .input:focus {
     background-color: rgb(78, 17, 17);
     border: 2px dashed rgb(175, 38, 38);
+    border-radius: 4px;
     border-radius: 10px;
     color: gray;
     text-align: center;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
 }
+
+.radioBtn {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 150%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default radio button */
+  .radioBtn input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom radio button */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: rgb(78, 17, 17);
+    border-radius: 50%;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .radioBtn:hover input ~ .checkmark {
+    background-color: rgb(48, 11, 11);
+  }
+  
+  /* When the radio button is checked, add a blue background */
+  .radioBtn input:checked ~ .checkmark {
+    background-color: #070101;
+  }
+  
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+.radioBtn input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+fieldset {
+    margin: 0% 5% 2%;
+    border: 0.2rem solid gray;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+legend {
+    font-size: 150%;
+    color: gray;
+}
+
+label {
+    font-size: 100%;
+    color: gray;
+    margin: 0% 0%;
+}
+
+
+/*#endregion Forms*/
+
 
 /*#region Scoreboard*/
 .grid-container .scoreboard {
@@ -59,11 +147,26 @@ canvas {
     'title title title set sat sas score scat scas';
     row-gap: 0.4rem;
     column-gap: 0.4rem;
-    border: 0.4rem solid black;
-    background-color: darkred;
 
     height: 90%;
 
+}
+
+.sc-default {
+    border: 0.4rem solid black;
+    background-color: darkred;
+    color: grey;
+}
+
+.sc-pong {
+    border: 0.4rem solid white;
+    background-color: black;
+    color: white;
+}
+.sc-tt {
+    border: 0.4rem solid white;
+    background-color: darkgreen;
+    color: white;
 }
 
 .grid-container-alternative .scoreboard {
@@ -78,15 +181,13 @@ canvas {
     'score score'
     'scpt scps'
     'scat scas';
-    border: 0.4rem solid black;
-    background-color: darkred;
 }
 
 .sc {
     text-align: center;
     vertical-align: middle;
     font-size: 200%;
-    color: grey;
+
 }
 
 .sc1 {
@@ -172,14 +273,21 @@ canvas {
     top: 5%;
     align-items: center;
     justify-content: center;
-    border: 0.4rem solid black;
-    background-color: darkred;
     flex-wrap: nowrap;
+}
+
+.options__screen {
+    position: absolute;
+    display: grid;
+    left: 35%;
+    width:30%;
+    top: 5%;
+
 }
 
 .message-tit {
     display: inline-flex;
-    color: gray;
+
     font-size: 200%;
     justify-self: center;
     text-align: center;
@@ -187,8 +295,7 @@ canvas {
 }
 
 .message-txt {
-    display: inline-flex;
-    color: gray;
+    display: inline-flex; 
     font-size: 100%;
     justify-self: center;
     text-align: center;
@@ -203,15 +310,115 @@ canvas {
     display: grid;
 }
 
-.message .button {
+.button {
     display:inline-flex;
-    background-color: gray;
-    color:darkred;
+
     font-size: larger;
     cursor: pointer;
     text-align: center;
     justify-content: center;
     margin: 5% 5%;
+}
+
+.msg-default {
+    color: gray;
+    border: 0.4rem solid black;
+    background-color: darkred;
+}
+.msg-default .button {
+    background-color: gray;
+    color:darkred;
+}
+
+.msg-pong {
+    color: white;
+    border: 0.4rem solid white;
+    background-color: black;
+}
+.msg-pong .button {
+    background-color: white;
+    color:rgb(27, 23, 23);
+}
+.msg-pong input {
+    background-color: gray;
+    color:rgb(27, 23, 23);
+}
+
+.msg-pong .radioBtn:hover input ~ .checkmark {
+    background-color: gray;
+  }
+  
+  .msg-pong .radioBtn input:checked ~ .checkmark {
+    background-color: darkgrey;
+  }
+
+.msg-pong input:focus {
+    background-color: white;
+    color:rgb(27, 23, 23);
+}
+
+.msg-pong legend {
+    color: white;
+}
+
+.msg-pong label {
+    color: white;
+}
+
+.msg-pong .checkmark {
+    background-color: white;
+}
+
+.msg-pong fieldset {
+    border: 0.2rem solid white;
+}
+
+.msg-tt {
+    color: white;
+    border: 0.4rem solid white;
+    background-color: darkgreen;
+}
+.msg-tt .button {
+    background-color: white;
+    color:darkgreen;
+}
+.msg-tt input {
+    background-color: gray;
+    color:rgb(27, 23, 23);
+}
+
+.msg-tt input:hover {
+    background-color: white;
+    color:rgb(27, 23, 23);
+}
+
+.msg-tt input:focus {
+    background-color: white;
+    color:rgb(27, 23, 23);
+}
+
+.msg-tt .radioBtn:hover input ~ .checkmark {
+    background-color: gray;
+  }
+  
+  .msg-tt .radioBtn input:checked ~ .checkmark {
+    background-color: black;
+  }
+
+.msg-tt legend {
+    color: white;
+}
+
+.msg-tt label {
+    color: white;
+}
+
+.msg-tt .checkmark {
+    background-color: white;
+}
+
+.msg-tt fieldset {
+    border: 0.2rem solid white;
 }
 
 
@@ -224,6 +431,11 @@ canvas {
 .blurred {
     filter:blur(10px) grayscale(0.4);
     -webkit-filter:blur(10px) grayscale(0.4);
+    
+}
+
+#main-container.blurred {
+    cursor: default;
 }
 
 /*#endregion Effects*/
@@ -234,6 +446,15 @@ canvas {
     .grid-container-alternative .scoreboard .sc {
         font-size: 120%;
     }
+    .options__screen {
+        position:fixed;
+        top:0%;
+        bottom:0%;
+        left:0%;
+        width:100%;
+        gap: 0;
+    }
+
     .message {
         position:fixed;
         top:0%;
@@ -250,10 +471,39 @@ canvas {
         font-size:250%;
         margin: 0%;
     }
+
+    .options__screen .message-tit {
+        font-size:150%;
+        margin: 0%;
+    }
+
+    legend {
+        font-size:125%;
+    }
+    .radioBtn {
+        font-size:125%;
+        margin-bottom: 0%;
+    }
+    fieldset {
+        margin: 0%;
+    }
+    .checkmark {
+        height: 20px;
+        width: 20px;
+    }
 }
 /*#endregion Between 1200-800*/
 /*#region Between 800-300*/
 @media only screen and (max-width: 800px) {
+    .options__screen {
+        position:fixed;
+        top:0%;
+        bottom:0%;
+        left:0%;
+        width:100%;
+        gap: 0;
+    }
+
     .message {
         position:fixed;
         top:0%;
@@ -271,9 +521,29 @@ canvas {
         font-size:250%;
         margin: 0%;
     }
+
+    .options__screen .message-tit {
+        font-size:150%;
+        margin: 0%;
+    }
+
     .message-txt {
         font-size:150%;
         margin: 0%;
+    }
+    legend {
+        font-size:100%;
+    }
+    .radioBtn {
+        font-size:100%;
+        margin-bottom: 0%;
+    }
+    fieldset {
+        margin: 0%;
+    }
+    .checkmark {
+        height: 15px;
+        width: 15px;
     }
 }
 /*#endregion Under 800*/

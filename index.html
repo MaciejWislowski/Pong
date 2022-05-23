@@ -10,8 +10,8 @@
 </head>
 <body>
     <div class="grid-container blurred" id="main-container">
-        <div class="scoreboard grid-item">
-            <div class="sc sc1">Pong 0.542</div>
+        <div class="scoreboard sc-default grid-item" id="scoreboard">
+            <div class="sc sc1">Pong 0.56</div>
             <div class="sc sc2"></div>
             <div class="sc sc3"></div>
             <div class="sc sc4">Set</div>
@@ -29,34 +29,72 @@
             <div class="sc sc16"></div>
             <div class="sc sc17">AI</div>
             <div class="sc sc18" id="0002">0</div>
-            
         </div>
         <div class="item2 grid-item"><canvas></canvas></div>
     </div>
     <div class="messages">
         <!-- Welcome message -->
-        <div class="start__screen message" id="start__screen">
+        <div class="start__screen message msg-default" id="start__screen">
             <p class="message-tit">Welcome in Pong game!</p>
             <div class="description_group">
                 <p class="message-txt">What is your name?</p>
                 <p class="message-txt"><input class="input" type='text' id="userName" value="Player"></p>
             </div>
             <div class="button_group">
-                <!--<div class="button" id="optionButton"><p>Options</p></div> -->
+                <div class="button" id="optionButton"><p>Options</p></div>
                 <div class="button" id="startButton"><p>Start the game</p></div>
             </div>
-
-
+        </div>
+        <!-- Options screen -->
+        <div class="options__screen  msg-default none" id="options__screen">
+            <p class="message-tit">Options</p>
+            <form wrap name="Victory conditions" method="get" action="" onsubmit="return false">
+                <fieldset>
+                    <legend>Victory Conditions</legend>
+                    <p>
+                        <label class="radioBtn" for="number0">Pong
+                            <input type="radio" checked value="0" name="number" id="number0" />
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radioBtn" for="number1">Table tennis
+                            <input type="radio" value="1" name="number" id="number1" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </p>
+                </fieldset>
+            </form>
+            <form wrap name="Color Schema" method="get" action="" onsubmit="return false">
+                <fieldset>
+                    <legend>Color Schema</legend>
+                    <p>
+                        <label class="radioBtn" for="color0">Default
+                            <input type="radio" checked value="2" name="color" id="color0" />
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radioBtn" for="color1">Pong
+                            <input type="radio" value="3" name="color" id="color1" />
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radioBtn" for="color2">Table tennis
+                            <input type="radio" value="4" name="color" id="color2" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </p>
+                </fieldset>
+            </form>
+            <div class="button" id="optionReturnButton">
+                <p>Return to start screen</p>
+            </div>
         </div>
         <!-- Massage when wrong (portrait) orientation of screen is applied -->
-        <div class="orientation__change message none" id="orientation__change">
+        <div class="orientation__change msg-default message none" id="orientation__change">
             <p class="message-tit">For better experience <br> use landscape orientation please :)</p>
             <div class="button" id="refreshButton">
                 <p>Refresh!</p>
             </div>
         </div>
         <!-- Win message -->
-        <div class="message none" id="won__screen">
+        <div class="message msg-default none" id="won__screen">
             <p class="message-tit">You have won!</p>
             <p class="message-txt" id="won__score"></p>
             <p class="message-txt">Congratulation! Excelent score!</p>
@@ -68,7 +106,7 @@
             </div>
         </div>
         <!-- Loose message -->
-        <div class="message none" id="lost__screen">
+        <div class="message msg-default none" id="lost__screen">
             <p class="message-tit">You have lost!</p>
             <p class="message-txt" id="lost__score"></p>
             <p class="message-txt">Don't worry! Next time will be better!</p>
