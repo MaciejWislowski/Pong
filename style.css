@@ -464,16 +464,16 @@ label {
         gap: 0;
     }
     .message-tit {
-        font-size:300%;
+        font-size:200%;
         margin: 0%;
     }
     .message-txt {
-        font-size:200%;
+        font-size:100%;
         margin: 0%;
     }
 
     .options__screen .message-tit {
-        font-size:150%;
+        font-size:125%;
         margin: 0%;
     }
 
@@ -518,7 +518,7 @@ label {
     }
 
     .message-tit {
-        font-size:250%;
+        font-size:150%;
         margin: 0%;
     }
 
@@ -528,7 +528,7 @@ label {
     }
 
     .message-txt {
-        font-size:150%;
+        font-size:100%;
         margin: 0%;
     }
     legend {

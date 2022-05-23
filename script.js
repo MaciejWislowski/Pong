@@ -450,6 +450,14 @@ function pause(e) {
     }
 }
 
+function orientPause() {
+        toggleClass('main-container','blurred');
+        toggleClass('pause__screen','none');
+        clearInterval(gameLoop);
+        window.removeEventListener('orientationchange',orientPause);
+        window.addEventListener('orientationchange',orientUnPause);
+}
+
 function unpause(e) {
     if (e.code == "Space") {
         toggleClass('pause__screen','none');
@@ -459,6 +467,14 @@ function unpause(e) {
         document.removeEventListener('keypress', unpause);
         document.addEventListener('keypress', pause);
     }
+}
+function orientUnPause(e) {
+        toggleClass('pause__screen','none');
+        toggleClass('main-container','blurred');
+        pauseBlock--;
+        gameLoop = setInterval(game, 15);
+        window.removeEventListener('orientationchange',orientUnPause);
+        window.addEventListener('orientationchange',orientPause);
 }
 
 //------------------------------------------   Effects   -------------------------------------//
@@ -532,20 +548,10 @@ function startGame() {
             else if (doc.msRequestFullscreen) {
                 doc.msRequestFullscreen();
             }
-            window.addEventListener('orientationchange',function() {
-                toggleClass('main-container','blurred');
-                toggleClass('pause__screen','none');
-                if(document.body.clientHeight > document.body.clientWidth) {
-                    clearInterval(gameLoop);
-                }
-                else {
-                    gameLoop = setInterval(game, 15);
-                }
-
-            });
+            window.addEventListener('orientationchange',orientPause);
             toggleClass('main-container','blurred');
             gameLoop = setInterval(game, 15);
-    }
+        }
     }
 
 }
@@ -608,7 +614,7 @@ window.addEventListener('load', function() {
         toggleClass('start__screen','none');
         toggleClass('orientation__change','none');
     } 
-})
+});
 document.addEventListener('keypress', pause);
 returnToMenuButton.addEventListener("click", refresh);
 startAgainButton.addEventListener("click", startGame);
