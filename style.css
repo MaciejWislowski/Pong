@@ -307,7 +307,7 @@ label {
 }
 
 .message .description_group p {
-    margin: 0% 10% 2%;
+    margin: 0% 10% 3%;
 }
 
 .message .description_group:last-child p {
@@ -315,7 +315,6 @@ label {
 }
 .message .description_group .button {
     margin: 0% 5%;
-
 }
 
 .button_group {
@@ -513,6 +512,17 @@ label {
         height: 20px;
         width: 20px;
     }
+    .message .description_group p {
+        margin: 0% 10% 3%;
+    }
+    
+    .message .description_group:last-child p {
+        margin: 0% 10% 5%;
+    }
+    .message .description_group .button {
+        margin: 0% 5%;
+    }
+
 }
 /*#endregion Between 1200-800*/
 /*#region Between 800-300*/
@@ -566,6 +576,16 @@ label {
     .checkmark {
         height: 15px;
         width: 15px;
+    }
+    .message .description_group p {
+        margin: 0% 10% 1%;
+    }
+    
+    .message .description_group:last-child p {
+        margin: 0% 10% 3%;
+    }
+    .message .description_group .button {
+        margin: 0% 5%;
     }
 }
 /*#endregion Under 800*/
