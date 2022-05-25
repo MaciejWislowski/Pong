@@ -11,23 +11,23 @@
 <body>
     <div class="grid-container blurred" id="main-container">
         <div class="scoreboard sc-default grid-item" id="scoreboard">
-            <div class="sc sc1">Pong 0.57</div>
+            <div class="sc sc1">Pong 0.60</div>
             <div class="sc sc2"></div>
             <div class="sc sc3"></div>
-            <div class="sc sc4">Set</div>
-            <div class="sc sc5 playerNameSc">Player</div>
+            <div class="sc sc4" id="setName">Set</div>
+            <div class="sc sc5 playerNameSc" id="pl1">Player</div>
             <div class="sc sc6" id="0003">0</div>
-            <div class="sc sc7">Score</div>
-            <div class="sc sc8 playerNameSc">Player</div>
+            <div class="sc sc7" id="scoreName">Score</div>
+            <div class="sc sc8 playerNameSc" id="pl2">Player</div>
             <div class="sc sc9" id="0001">0</div>
             <div class="sc sc10"></div>
             <div class="sc sc11"></div>
             <div class="sc sc12"></div>
             <div class="sc sc13"></div>
-            <div class="sc sc14">AI</div>
+            <div class="sc sc14" id="ai1">AI</div>
             <div class="sc sc15" id="0004">0</div>
             <div class="sc sc16"></div>
-            <div class="sc sc17">AI</div>
+            <div class="sc sc17" id="ai2">AI</div>
             <div class="sc sc18" id="0002">0</div>
         </div>
         <div class="item2 grid-item"><canvas></canvas></div>
@@ -42,7 +42,23 @@
             </div>
             <div class="button_group">
                 <div class="button" id="optionButton"><p>Options</p></div>
-                <div class="button" id="startButton"><p>Start the game</p></div>
+                <div class="button" id="startButton"><p>Play</p></div>
+            </div>
+        </div>
+        <!-- Game mode screen -->
+        <div class="gmode__screen message none msg-default" id="gmode__screen">
+            <p class="message-tit">Choose victory conditions</p>
+            <div class="description_group">
+                <div class="button" id="startPongButton"><p>Pong</p></div>
+                <p class="message-txt">Standard pong victory conditions. Who achieve 21 points wins!</p>
+            </div>
+            <div class="description_group">
+                <div class="button" id="startTTButton"><p>Table tennis</p></div>
+                <p class="message-txt">You need to win 3 sets to win the game. To win set you need at least 11 points and 2 more then your rival has!</p>
+            </div>
+            <div class="description_group">
+                <div class="button" id="startSurButton"><p>Survival</p></div>
+                <p class="message-txt">How long can you survive?</p>
             </div>
         </div>
         <!-- Options screen -->
@@ -94,21 +110,15 @@
             <p class="message-tit">You have won!</p>
             <p class="message-txt" id="won__score"></p>
             <p class="message-txt">Congratulation! Excelent score!</p>
-            <div class="button" id="startAgainButtonW">
-                <p>Start again</p>
-            </div>
             <div class="button" id="returnToMenuButtonW">
                 <p>Return to Menu</p>
             </div>
         </div>
         <!-- Loose message -->
         <div class="message msg-default none" id="lost__screen">
-            <p class="message-tit">You have lost!</p>
+            <p class="message-tit" id="lost__tit">You have lost!</p>
             <p class="message-txt" id="lost__score"></p>
-            <p class="message-txt">Don't worry! Next time will be better!</p>
-            <div class="button" id="startAgainButton">
-                <p>Start again</p>
-            </div>
+            <p class="message-txt" id="lost__txt">Don't worry! Next time will be better!</p>
             <div class="button" id="returnToMenuButton">
                 <p>Return to Menu</p>
             </div>

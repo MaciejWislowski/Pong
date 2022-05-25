@@ -306,6 +306,14 @@ label {
     display: grid;
 }
 
+.message .description_group p {
+    margin: 0% 10% 5%;
+}
+.message .description_group .button {
+    margin: 0% 5%;
+
+}
+
 .button_group {
     display: grid;
 }
@@ -329,6 +337,9 @@ label {
     background-color: gray;
     color:darkred;
 }
+.msg-default .button:hover {
+    box-shadow: 2px 2px  20px rgb(78, 77, 77);
+}
 
 .msg-pong {
     color: white;
@@ -338,6 +349,9 @@ label {
 .msg-pong .button {
     background-color: white;
     color:rgb(27, 23, 23);
+}
+.msg-pong .button:hover {
+    box-shadow: 2px 2px  20px rgb(27, 23, 23);;
 }
 .msg-pong input {
     background-color: gray;
@@ -381,6 +395,10 @@ label {
 .msg-tt .button {
     background-color: white;
     color:darkgreen;
+}
+
+.msg-tt .button:hover {
+    box-shadow: 2px 2px  20px gray;
 }
 .msg-tt input {
     background-color: gray;

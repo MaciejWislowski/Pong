@@ -4,6 +4,7 @@ var doc = document.documentElement;
 var vicCondition = 0;
 var diffLevel = 0;
 var colorSchema = 0;
+var gmode = 0;
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -243,30 +244,42 @@ function aiPosition () {
         hardFactor = 1.5;
     }
    // Ai paddle movement on ai part of board
-   
-        if(ballX > cw/2) {
-            if (middlePaddle - middleBall > 0.2 * ch) {
-                aiY -= hardFactor*ballSpeedMax+playerScore/11*(playerSet+1); 
-            }
-            else if (middlePaddle - middleBall > 0.05 * ch) {
-                aiY -= hardFactor*ballSpeedMax/3+playerScore/11*(playerSet+1);
-            }
-            else if (middlePaddle - middleBall < -0.2 * ch) {
-                aiY += hardFactor*ballSpeedMax+playerScore/11*(playerSet+1);
-            }
-            else if (middlePaddle - middleBall < -0.05 * ch) {
-                aiY += hardFactor*ballSpeedMax/3+playerScore/11*(playerSet+1);
-            }
+   if (gmode == 2) {
+    aiY = -1000;
+   }
+   else {
+    if(ballX > cw/2) {
+        if (middlePaddle - middleBall > 0.2 * ch) {
+            aiY -= hardFactor*ballSpeedMax+playerScore/11*(playerSet+1); 
         }
-        // AI movement on players part of board
-        else if (ballX <= cw/2 && ballX > 2*playerX) {
-            if (middlePaddle-middleBall > 0.1 * ch) {
-                aiY -= hardFactor*ballSpeedMax/5;
-            }
-            else if (middlePaddle - middleBall < - 0.1 * ch) {
-                aiY += hardFactor*ballSpeedMax/5;
-            }
+        else if (middlePaddle - middleBall > 0.05 * ch) {
+            aiY -= hardFactor*ballSpeedMax/3+playerScore/11*(playerSet+1);
         }
+        else if (middlePaddle - middleBall < -0.2 * ch) {
+            aiY += hardFactor*ballSpeedMax+playerScore/11*(playerSet+1);
+        }
+        else if (middlePaddle - middleBall < -0.05 * ch) {
+            aiY += hardFactor*ballSpeedMax/3+playerScore/11*(playerSet+1);
+        }
+    }
+    // AI movement on players part of board
+    else if (ballX <= cw/2 && ballX > 2*playerX) {
+        if (middlePaddle-middleBall > 0.1 * ch) {
+            aiY -= hardFactor*ballSpeedMax/5;
+        }
+        else if (middlePaddle - middleBall < - 0.1 * ch) {
+            aiY += hardFactor*ballSpeedMax/5;
+        }
+    }
+    if (aiY >= ch - paddleHeight) {
+        aiY = ch - paddleHeight;
+    }
+
+    if (aiY <= 0) {
+        aiY = 0;
+    }
+   }
+
    
 
 }
@@ -285,19 +298,52 @@ function collistions() {
         ballY = ch/2-ballSize/2;
         ballSpeedX = 0.004 * cw;
         ballSpeedY = 0.004 * cw;
-        aiScore++;
+        if(gmode == 2) {
+            toggleClass('main-container','blurred');
+            let score = document.getElementById('lost__score');
+            if(playerScore >= 100) {
+                lost__txt.innerHTML = 'Excelent score! Congratulations!'
+            }
+            else if(playerScore >= 50) {
+                lost__txt.innerHTML = 'Excelent score! I believe you can better!'
+            }
+            else if(playerScore >= 10) {
+                lost__txt.innerHTML = "Don't worry! There are worse than you!"
+            }
+            else {
+
+            }
+            
+            score.innerText = document.getElementById('userName').value + ': '+ playerScore;
+            toggleClass('lost__screen','none');
+            clearInterval(gameLoop);
+        }
+        else {
+            aiScore++;
+        }
         document.getElementById('0002').innerHTML = aiScore;
     }
     if (ballX >=cw-ballSize) {
-        ballX = cw/2-ballSize/2;
-        ballY = ch/2-ballSize/2;
-        ballSpeedX = -0.004 * cw;
-        ballSpeedY = -0.004 * cw;
-        playerScore++;
-        document.getElementById('0001').innerHTML = playerScore;
+        if(gmode == 2) {
+            ballX -= 5;
+            ballSpeedX = -ballSpeedX;
+            ballSpeedY = ballSpeedY;
+            playerScore++;
+            document.getElementById('0001').innerHTML = playerScore;
+            speedUp();
+        }
+        else {
+            ballX = cw/2-ballSize/2;
+            ballY = ch/2-ballSize/2;
+            ballSpeedX = -0.004 * cw;
+            ballSpeedY = -0.004 * cw;
+            playerScore++;
+            document.getElementById('0001').innerHTML = playerScore;
+        }
+
     }
 
-    // Collisions with Players paddle
+    //Collisions with Players paddle
     if ((ballX <= playerX + paddleWidth) && (ballX > playerX + paddleWidth-ballSpeedMax)  && (ballY + ballSize> playerY) && (ballY< playerY + paddleHeight)) {
         ballX += 5;
         ballSpeedX = -ballSpeedX;
@@ -385,57 +431,97 @@ function speedUp() {
 
 // Set and victory conditions
 function set() {
-    if(playerScore >= 11 && playerScore - aiScore >= 2) {
-        playerSet++;
-        playerScore = 0;
-        aiScore = 0;
-        document.getElementById('0003').innerHTML = playerSet;
-        document.getElementById('0002').innerHTML = aiScore;
-        document.getElementById('0001').innerHTML = playerScore;
-        ballSpeedMax++
+    if(gmode == 0) {
+        if (playerScore >= 21 && playerScore - aiScore >= 2) {
+            toggleClass('main-container','blurred');
+            let score = document.getElementById('won__score');
+            score.innerText = document.getElementById('userName').value + ': '+ playerScore  + '     ' + 'AI: ' + aiScore;
+            toggleClass('won__screen','none');
+            playerSet = '';
+            aiSet = '';
+            playerScore = 0;
+            aiScore = 0;       
+            ballSpeedMax = 0.015 * cw;
+            document.getElementById('0003').innerHTML = playerSet;
+            document.getElementById('0004').innerHTML = aiSet;
+            document.getElementById('0002').innerHTML = aiScore;
+            document.getElementById('0001').innerHTML = playerScore;
+            clearInterval(gameLoop);
+        }
+        if (aiScore >= 21 && aiScore - playerScore >= 2) {
+            toggleClass('main-container','blurred');
+            let score = document.getElementById('lost__score');
+            score.innerText = 'AI: ' + aiScore + '     ' + document.getElementById('userName').value + ': '+ playerScore;
+            toggleClass('lost__screen','none');
+            playerSet = '';
+            aiSet = '';
+            playerScore = 0;
+            aiScore = 0;
+            ballSpeedMax = 0.015 * cw;
+    
+            document.getElementById('0003').innerHTML = playerSet;
+            document.getElementById('0004').innerHTML = aiSet;
+            document.getElementById('0002').innerHTML = aiScore;
+            document.getElementById('0001').innerHTML = playerScore;
+            clearInterval(gameLoop);
+        }
     }
-    if(aiScore >= 11 && aiScore - playerScore >= 2 ) {
-        aiSet++;
-        playerScore -= playerScore;
-        aiScore -= aiScore;
-        ballSpeedMax++
-        document.getElementById('0004').innerHTML = aiSet;
-        document.getElementById('0002').innerHTML = aiScore;
-        document.getElementById('0001').innerHTML = playerScore;
+    if(gmode == 1){
+        if(playerScore >= 11 && playerScore - aiScore >= 2) {
+            playerSet++;
+            playerScore = 0;
+            aiScore = 0;
+            document.getElementById('0003').innerHTML = playerSet;
+            document.getElementById('0002').innerHTML = aiScore;
+            document.getElementById('0001').innerHTML = playerScore;
+            ballSpeedMax++
+        }
+        if(aiScore >= 11 && aiScore - playerScore >= 2 ) {
+            aiSet++;
+            playerScore -= playerScore;
+            aiScore -= aiScore;
+            ballSpeedMax++
+            document.getElementById('0004').innerHTML = aiSet;
+            document.getElementById('0002').innerHTML = aiScore;
+            document.getElementById('0001').innerHTML = playerScore;
+        }
+        if (playerSet==3) {
+            toggleClass('main-container','blurred');
+            let score = document.getElementById('won__score');
+            score.innerText = document.getElementById('userName').value + ': '+ playerSet  + '     ' + 'AI: ' + aiSet;
+            toggleClass('won__screen','none');
+            playerSet = 0;
+            aiSet = 0;
+            playerScore = 0;
+            aiScore = 0;       
+            ballSpeedMax = 0.015 * cw;
+            document.getElementById('0003').innerHTML = playerSet;
+            document.getElementById('0004').innerHTML = aiSet;
+            document.getElementById('0002').innerHTML = aiScore;
+            document.getElementById('0001').innerHTML = playerScore;
+            clearInterval(gameLoop);
+        }
+        if (aiSet==3) {
+            toggleClass('main-container','blurred');
+            let score = document.getElementById('lost__score');
+            score.innerText = 'AI: ' + aiSet + '     ' + document.getElementById('userName').value + ': '+ playerSet;
+            toggleClass('lost__screen','none');
+            playerSet = 0;
+            aiSet = 0;
+            playerScore = 0;
+            aiScore = 0;
+            ballSpeedMax = 0.015 * cw;
+    
+            document.getElementById('0003').innerHTML = playerSet;
+            document.getElementById('0004').innerHTML = aiSet;
+            document.getElementById('0002').innerHTML = aiScore;
+            document.getElementById('0001').innerHTML = playerScore;
+            clearInterval(gameLoop);
+        }
     }
-    if (playerSet==3) {
-        toggleClass('main-container','blurred');
-        let score = document.getElementById('won__score');
-        score.innerText = document.getElementById('userName').value + ': '+ playerSet  + '     ' + 'AI: ' + aiSet;
-        toggleClass('won__screen','none');
-        playerSet = 0;
-        aiSet = 0;
-        playerScore = 0;
-        aiScore = 0;
+    if(gmode == 2){
         
-        ballSpeedMax = 0.015 * cw;
-        document.getElementById('0003').innerHTML = playerSet;
-        document.getElementById('0004').innerHTML = aiSet;
-        document.getElementById('0002').innerHTML = aiScore;
-        document.getElementById('0001').innerHTML = playerScore;
-        clearInterval(gameLoop);
-    }
-    if (aiSet==3) {
-        toggleClass('main-container','blurred');
-        let score = document.getElementById('lost__score');
-        score.innerText = 'AI: ' + aiSet + '     ' + document.getElementById('userName').value + ': '+ playerSet;
-        toggleClass('lost__screen','none');
-        playerSet = 0;
-        aiSet = 0;
-        playerScore = 0;
-        aiScore = 0;
-        ballSpeedMax = 0.015 * cw;
-
-        document.getElementById('0003').innerHTML = playerSet;
-        document.getElementById('0004').innerHTML = aiSet;
-        document.getElementById('0002').innerHTML = aiScore;
-        document.getElementById('0001').innerHTML = playerScore;
-        clearInterval(gameLoop);
+        
     }
 }
 
@@ -507,8 +593,9 @@ function game () {
 
 }
 
-// Function describe what is happening after clicking the start game button
+// Function describe what is happening after clicking the start game button (table tennis version)
 function startGame() {
+    gmode = 1;
     const startGameMessage = document.getElementById("start__screen");
     const orientationMessage = document.getElementById('orientation__change');
     var playerName = document.getElementById('userName').value;
@@ -529,6 +616,129 @@ function startGame() {
         }
         if (!won__screen.classList.contains('none')){
             won__screen.classList.toggle('none');
+        }
+        if (!gmode__screen.classList.contains('none')){
+            gmode__screen.classList.toggle('none');
+        }
+
+
+        if(document.body.clientHeight > document.body.clientWidth) {
+            orientationMessage.classList.remove('none');
+        } 
+        else {
+            /* Chrome, MiBrowser, Brave */
+            if(doc.requestFullscreen) {
+                doc.requestFullscreen();
+            }
+            /* Safari */
+            else if (doc.webkitRequestFullscreen) {
+                doc.webkitRequestFullscreen();
+            }
+            /* IE11 */
+            else if (doc.msRequestFullscreen) {
+                doc.msRequestFullscreen();
+            }
+            window.addEventListener('orientationchange',orientPause);
+            toggleClass('main-container','blurred');
+            gameLoop = setInterval(game, 15);
+        }
+    }
+
+}
+
+// Function describe what is happening after clicking the start game button (pong version)
+function startPongGame() {
+    gmode = 0;
+    const startGameMessage = document.getElementById("start__screen");
+    const orientationMessage = document.getElementById('orientation__change');
+    document.getElementById('0003').innerHTML = '';
+    document.getElementById('0004').innerHTML = '';
+    document.getElementById('pl1').innerHTML = '';
+    document.getElementById('ai1').innerHTML = '';
+    document.getElementById('setName').innerHTML = '';
+    document.getElementById('scoreName').innerHTML = '';
+
+    var playerName = document.getElementById('userName').value;
+
+    if(playerName.length > 11) {
+        alert("Please choose shorter name!")
+    }
+    else {
+        
+        document.getElementsByClassName('playerNameSc')[1].innerText=playerName;
+
+        if (!startGameMessage.classList.contains('none')){
+            startGameMessage.classList.toggle('none');
+        }
+        if (!lost__screen.classList.contains('none')){
+            lost__screen.classList.toggle('none');
+        }
+        if (!won__screen.classList.contains('none')){
+            won__screen.classList.toggle('none');
+        }
+        if (!gmode__screen.classList.contains('none')){
+            gmode__screen.classList.toggle('none');
+        }
+
+
+        if(document.body.clientHeight > document.body.clientWidth) {
+            orientationMessage.classList.remove('none');
+        } 
+        else {
+            /* Chrome, MiBrowser, Brave */
+            if(doc.requestFullscreen) {
+                doc.requestFullscreen();
+            }
+            /* Safari */
+            else if (doc.webkitRequestFullscreen) {
+                doc.webkitRequestFullscreen();
+            }
+            /* IE11 */
+            else if (doc.msRequestFullscreen) {
+                doc.msRequestFullscreen();
+            }
+            window.addEventListener('orientationchange',orientPause);
+            toggleClass('main-container','blurred');
+            gameLoop = setInterval(game, 15);
+        }
+    }
+
+}
+
+// Function describe what is happening after clicking the start game button (pong version)
+function startSurvivalGame() {
+    gmode = 2;
+    const startGameMessage = document.getElementById("start__screen");
+    const orientationMessage = document.getElementById('orientation__change');
+    document.getElementById('0002').innerHTML = '';
+    document.getElementById('0003').innerHTML = '';
+    document.getElementById('0004').innerHTML = '';
+    document.getElementById('pl1').innerHTML = '';
+    document.getElementById('ai1').innerHTML = '';
+    document.getElementById('ai2').innerHTML = '';
+    document.getElementById('setName').innerHTML = '';
+    document.getElementById('scoreName').innerHTML = '';
+
+    var playerName = document.getElementById('userName').value;
+
+    if(playerName.length > 11) {
+        alert("Please choose shorter name!")
+    }
+    else {
+        
+        document.getElementsByClassName('playerNameSc')[1].innerText=playerName;
+
+        if (!startGameMessage.classList.contains('none')){
+            startGameMessage.classList.toggle('none');
+        }
+        if (!lost__screen.classList.contains('none')){
+            lost__screen.classList.toggle('none');
+        }
+        if (!won__screen.classList.contains('none')){
+            won__screen.classList.toggle('none');
+        }
+        if (!gmode__screen.classList.contains('none')){
+            gmode__screen.classList.toggle('none');
         }
 
 
@@ -617,13 +827,17 @@ window.addEventListener('load', function() {
 });
 document.addEventListener('keypress', pause);
 returnToMenuButton.addEventListener("click", refresh);
-startAgainButton.addEventListener("click", startGame);
 returnToMenuButtonW.addEventListener("click", refresh);
-startAgainButtonW.addEventListener("click", startGame);
 refreshButton.addEventListener("click", refresh);
 // Start the game button on Welcomming message
 optionButton.addEventListener("click", optionScreen)
-startButton.addEventListener("click", startGame);
+startTTButton.addEventListener("click", startGame);
+startPongButton.addEventListener("click", startPongGame);
+startSurButton.addEventListener("click", startSurvivalGame);
+startButton.addEventListener('click', function() {
+    toggleClass('start__screen','none');
+    toggleClass('gmode__screen','none');
+})
 optionReturnButton.addEventListener('click', function() {
     toggleClass('options__screen','none');
     toggleClass('start__screen','none');
