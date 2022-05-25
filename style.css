@@ -307,6 +307,10 @@ label {
 }
 
 .message .description_group p {
+    margin: 0% 10% 2%;
+}
+
+.message .description_group:last-child p {
     margin: 0% 10% 5%;
 }
 .message .description_group .button {
